@@ -1,0 +1,139 @@
+ADMIN CREDENTIALS:
+username:admin
+password:Pass@1234
+
+************COMMON API's FOR SELLER,USER,ADMIN************
+~login
+>type:POST
+>url:http://localhost:8080/oauth/token
+
+~logout
+>type:GET
+>url:localhost:8080/doLogout
+
+~forget password token
+>type:POST
+>url:localhost:8080/forgetPassword
+>request param:email
+
+~reset password
+>type:PUT
+>url:localhost:8080/resetPassword
+>request param:-token(optional)
+               -password
+               -confirmPassword
+
+***********************ADMIN API'S************************
+~admin home
+>type:GET
+>url:localhost:8080/admin/home
+
+~edit name
+>type:PUT
+>url:localhost:8080/editName
+>request param:-username
+
+~get all registered customers
+>type:GET
+>url:localhost:8080/getAllRegistered/Customers
+
+~get all registered sellers
+>type:GET
+>url:localhost:8080/getAllRegistered/Sellers
+
+~change role
+>type:PUT
+>url:localhost:8080/changeRole
+>request param:-role
+
+~activate customer/seller
+>type:PUT
+>url:localhost:8080/ActivateStatus/{id}
+
+~deactivate customer/seller
+>type:PUT
+>url:localhost:8080/deActivateStatus/{id}
+
+~activate Product
+>type:PUT
+>url:localhost:8080/ActivateProductStatus/{id}
+
+~deactivate Product
+>type:PUT
+>url:localhost:8080/deActivateProductStatus/{id}
+
+~view a product
+>type:GET
+>url:localhost:8080/viewProduct/{productId}
+
+~view all active products
+>type:GET
+>url:localhost:8080/listOfAdminProducts
+***********************SELLER API's***********************
+~register seller
+>type:POST
+>url:localhost:8080/register/seller
+
+~view Profile
+>type:GET
+>url:localhost:8080/myProfile/seller
+
+~edit Company details
+>type:PUT
+>url:localhost:8080/editCompanyDetails
+
+~update address
+>type:PUT
+>url:http://localhost:8080/updateAddress/{address_id}
+
+~view all products
+>type:GET
+>url:localhost:8080/listOfSellerProducts
+
+~view all variations of a product
+>type:GET
+>url:localhost:8080/getProductVariations/{productId}
+
+~delete product
+>type:DELETE
+>url:localhost:8080/deleteProduct
+>request param:-productId
+
+***********************CUSTOMER API's********************
+~register customer
+>type:POST
+>url:localhost:8080/register/customer
+
+~view Profile
+>type:GET
+>url:localhost:8080/myProfile/customer
+
+~edit name
+>type:PUT
+>url:localhost:8080/editName
+>request param:-username
+
+~add Address
+>type:POST
+>url:localhost:8080/addAddress
+>request body:-address
+
+~view Address
+>type:GET
+>url:localhost:8080/viewAddress
+
+~update address
+>type:PUT
+>url:http://localhost:8080/updateAddress/{address_id}
+
+~delete Address
+>type:DELETE
+>url:localhost:8080/deleteAddress/{Address_id}
+
+~view a product
+>type:GET
+>url:localhost:8080/viewProduct/{productId}
+
+~view all variations of a product based on category id
+>type:GET
+>url:localhost:8080/listOfProducts/{categoryId}
