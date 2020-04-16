@@ -1,23 +1,44 @@
 package com.example.Project.ECommerce.Entity;
 
-import com.example.Project.ECommerce.Utility.HashMapConverter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Order_Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Positive
     private long quantity;
+    @Positive
     private double price;
 
+    @Column(name = "createdDate")
+    @CreatedDate
+    private LocalDateTime createdOn;
 
-    @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> product_variation_metadata;
+    @Column(name = "modifiedDate")
+    @LastModifiedDate
+    private LocalDateTime modifiedOn;
 
-    @OneToOne
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String modifiedBy;
+
+    private String product_variation_metadata;
+
+    @ManyToOne
     @JoinColumn(name = "Order_id")
     private Orders order;
 
@@ -31,9 +52,14 @@ public class Order_Product {
     public Order_Product() {
     }
 
-    public Order_Product(long quantity, double price, Map<String, Object> product_variation_metadata) {
+
+    public Order_Product(@Positive long quantity, @Positive double price, LocalDateTime createdOn, LocalDateTime modifiedOn, String createdBy, String modifiedBy, String product_variation_metadata) {
         this.quantity = quantity;
         this.price = price;
+        this.createdOn = createdOn;
+        this.modifiedOn = modifiedOn;
+        this.createdBy = createdBy;
+        this.modifiedBy = modifiedBy;
         this.product_variation_metadata = product_variation_metadata;
     }
 
@@ -61,11 +87,43 @@ public class Order_Product {
         this.price = price;
     }
 
-    public Map<String, Object> getProduct_variation_metadata() {
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getModifiedOn() {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(LocalDateTime modifiedOn) {
+        this.modifiedOn = modifiedOn;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public String getProduct_variation_metadata() {
         return product_variation_metadata;
     }
 
-    public void setProduct_variation_metadata(Map<String, Object> product_variation_metadata) {
+    public void setProduct_variation_metadata(String product_variation_metadata) {
         this.product_variation_metadata = product_variation_metadata;
     }
 

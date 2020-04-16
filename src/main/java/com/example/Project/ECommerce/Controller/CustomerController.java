@@ -26,11 +26,7 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
     @Autowired
-    ProductRepository productRepository;
-    @Autowired
     AddressRepository addressRepository;
-    @Autowired
-    ProductReviewRepository productReviewRepository;
 
     @Autowired
     GetCurrentLoggedInUser getCurrentLoggedInUser;
@@ -76,31 +72,6 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customer/listOfProducts/{categoryId}")
-    public List<Object[]> getListOfProducts(@PathVariable(name = "categoryId")long categoryId) {
-        return productRepository.findProductList(categoryId);
-    }
-
-    @GetMapping("/customer/ProductDetails/{product_id}")
-    public List<Object[]> getDetailedProducts(@PathVariable(name = "product_id") long product_id) {
-        return productRepository.findProductDetails(product_id);
-    }
-
-    @PostMapping("/customer/addProductReview/{product_id}")
-    public String addProductReview(@PathVariable(name = "product_id") long product_id,
-                                   @RequestBody ProductReview productReview){
-        String username= getCurrentLoggedInUser.getCurrentUser();
-        Customer customer= customerRepository.findByUsername(username);
-        Optional<Product> optionalProduct =productRepository.findById(product_id);
-        Product product=optionalProduct.get();
-        ProductReview productReview1 =new ProductReview();
-        productReview1.setCustomer(customer);
-        productReview1.setRating(productReview.getRating());
-        productReview1.setReview(productReview.getReview());
-        productReview1.setProduct(product);
-        productReviewRepository.save(productReview1);
-        return "Review added!";
-    }
 
 
 }

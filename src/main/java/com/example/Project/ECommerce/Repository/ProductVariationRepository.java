@@ -13,6 +13,18 @@ import java.util.List;
 @Repository
 public interface ProductVariationRepository extends CrudRepository<ProductVariation,Long> {
 
+    @Query(value = "select product_id from ProductVariation where id =:id",nativeQuery = true)
+    long getProductId(@Param(value = "id") long id);
+
+    @Query(value = "select * from ProductVariation where product_id=:product_id",nativeQuery = true)
+    List<Object[]> getProductVariation(@Param("product_id") long product_id);
+
+    @Query(value = "select primaryImageName,price,quantity_available,metadata " +
+            "from ProductVariation pv " +
+            "inner join Product p on pv.product_id=p.id " +
+            "where p.id=:id",nativeQuery = true)
+    List<Object[]> getAllProductVariation(@Param(value ="id") long id);
+
     @Transactional
     @Modifying
     @Query(value = "delete ProductVariation from ProductVariation  " +
@@ -20,10 +32,5 @@ public interface ProductVariationRepository extends CrudRepository<ProductVariat
             "where product_id=:id",nativeQuery = true)
     void deleteProductVariation(@Param(value = "id") long id);
 
-    @Query(value = "select primaryImageName,price,quantity_available,metadata " +
-            "from ProductVariation pv " +
-            "inner join Product p on pv.product_id=p.id " +
-            "where p.id=:id",nativeQuery = true)
-    List<Object[]> getProductVariation(@Param(value ="id") long id);
 
 }

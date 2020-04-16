@@ -57,6 +57,9 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
             "where p.category_id=:id",nativeQuery = true)
     List<Object[]> findProductDetails(@Param(value = "id")long id);
 
+    @Query(value = "select category_id from Product where id=:id",nativeQuery = true)
+    long getCategoryId(@Param(value = "id")long id);
+
     @Transactional
     @Modifying
     @Query(value = "delete from Product " +

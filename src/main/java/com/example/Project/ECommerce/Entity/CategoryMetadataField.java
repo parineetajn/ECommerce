@@ -9,9 +9,9 @@ public class CategoryMetadataField {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
-    @Column(unique = true, nullable = false)
-    String Name;
+    private long id;
+    @Column(unique = true)
+    private String Name;
 
     @OneToMany(mappedBy = "categoryMetadataField", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<CategoryMetadataFieldValues> categoryMetadataFieldValuesSet;
@@ -42,15 +42,15 @@ public class CategoryMetadataField {
         this.categoryMetadataFieldValuesSet = categoryMetadataFieldValuesSet;
     }
 
-    public void addFieldValues(CategoryMetadataFieldValues fieldValue){
-        if(fieldValue != null){
+    public void addFieldValues( CategoryMetadataFieldValues values){
+        if(values!= null){
             if(categoryMetadataFieldValuesSet==null)
                 categoryMetadataFieldValuesSet = new HashSet<>();
-            categoryMetadataFieldValuesSet.add(fieldValue);
-            fieldValue.setCategoryMetadataField(this);
+
+            categoryMetadataFieldValuesSet.add(values);
+            values.setCategoryMetadataField(this);
         }
     }
-
     @Override
     public String toString() {
         return "CategoryMetadataField{" +

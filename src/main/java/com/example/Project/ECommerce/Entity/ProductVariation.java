@@ -3,6 +3,8 @@ package com.example.Project.ECommerce.Entity;
 import com.example.Project.ECommerce.Utility.HashMapConverter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -11,14 +13,17 @@ import java.util.Set;
 public class ProductVariation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Positive
     private long quantity_available;
+    @Positive
     private double price;
     private String primaryImageName;
+    private String metadata;
 
     @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> metadata;
+    private Map<String, Object> metadataAttributes;
 
     private boolean isActive = false;
 
@@ -75,12 +80,20 @@ public class ProductVariation {
         this.primaryImageName = primaryImageName;
     }
 
-    public Map<String, Object> getMetadata() {
+    public String getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Map<String, Object> metadata) {
+    public void setMetadata(String metadata) {
         this.metadata = metadata;
+    }
+
+    public Map<String, Object> getMetadataAttributes() {
+        return metadataAttributes;
+    }
+
+    public void setMetadataAttributes(Map<String, Object> metadataAttributes) {
+        this.metadataAttributes = metadataAttributes;
     }
 
     public boolean isActive() {
@@ -115,12 +128,13 @@ public class ProductVariation {
         this.order_products = order_products;
     }
 
-    public void addOrderProduct(Order_Product orderProduct){
-        if(orderProduct != null){
-            if(order_products == null)
-                order_products = new LinkedHashSet<>();
-            order_products.add(orderProduct);
+    public void addToCart(Cart cart)
+    {
+        if (carts==null)
+        {
+            carts = new HashSet<>();
         }
+        carts.add(cart);
     }
 
     @Override

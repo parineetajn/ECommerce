@@ -3,9 +3,10 @@ package com.example.Project.ECommerce.Entity;
 import com.example.Project.ECommerce.Utility.CategoryMetadataFieldValuesId;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class CategoryMetadataFieldValues {
+public class CategoryMetadataFieldValues implements Serializable {
     @EmbeddedId
     private CategoryMetadataFieldValuesId id = new CategoryMetadataFieldValuesId();
 

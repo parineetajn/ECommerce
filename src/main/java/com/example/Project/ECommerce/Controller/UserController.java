@@ -1,12 +1,8 @@
 package com.example.Project.ECommerce.Controller;
 
 import com.example.Project.ECommerce.Entity.Address;
-import com.example.Project.ECommerce.Entity.Product;
 import com.example.Project.ECommerce.Exceptions.PasswordAndConfirmPasswordMismatchException;
 import com.example.Project.ECommerce.PasswordValidation.PasswordValidatorConstraint;
-import com.example.Project.ECommerce.Repository.AddressRepository;
-import com.example.Project.ECommerce.Repository.CustomerRepository;
-import com.example.Project.ECommerce.Repository.ProductRepository;
 import com.example.Project.ECommerce.Service.TokenService;
 import com.example.Project.ECommerce.Service.UserService;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
@@ -24,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Validated
@@ -34,25 +28,16 @@ public class UserController {
     TokenService tokenService;
     @Autowired
     UserService userService;
-
     @Autowired
     TokenStore tokenStore;
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    CustomerRepository customerRepository;
-    @Autowired
-    AddressRepository addressRepository;
-    @Autowired
-    ProductRepository productRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
     @Autowired
     MailSenderService mailSenderService;
-
     @Autowired
     GetCurrentLoggedInUser getCurrentLoggedInUser;
 
@@ -120,16 +105,7 @@ public class UserController {
             throw new PasswordAndConfirmPasswordMismatchException("Password and confirm password are not same!");
     }
 
-    @GetMapping("/viewProduct/{productId}")
-    public Object getProduct(@PathVariable(name = "productId")long productId){
-        Optional<Product> product = productRepository.findById(productId);
-        if(product.isPresent()){
-            List<Object[]> prod=productRepository.findProduct(productId);
-            return prod;
-        }
-        else
-            throw new UserNotFoundException("Product not found!");
-    }
+
 
 
 }

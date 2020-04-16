@@ -8,9 +8,10 @@ import java.util.Set;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotEmpty
+    @Column(unique = true)
     private String categoryName;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -73,30 +74,6 @@ public class Category {
         this.products = products;
     }
 
-    public void addSubCategory(Category category){
-        if(category != null){
-            if(categories == null)
-                categories = new HashSet<>();
-            categories.add(category);
-            category.setCategory(this);
-        }
-    }
-    public void addProduct(Product product){
-        if(product != null){
-            if(products == null)
-                products = new HashSet<Product>();
-            products.add(product);
-            product.setCategoryInProduct(this);
-        }
-    }
-    public void addFieldValues(CategoryMetadataFieldValues categoryMetadataFieldValues){
-        if(categoryMetadataFieldValues != null){
-            if(categoryMetadataFieldValuesSet==null)
-                categoryMetadataFieldValuesSet = new HashSet<>();
-            categoryMetadataFieldValuesSet.add(categoryMetadataFieldValues);
-            categoryMetadataFieldValues.setCategory(this);
-        }
-    }
     @Override
     public String toString() {
         return "Category{" +

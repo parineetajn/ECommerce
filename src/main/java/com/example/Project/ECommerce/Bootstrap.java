@@ -1,6 +1,8 @@
 package com.example.Project.ECommerce;
 
 import com.example.Project.ECommerce.Entity.*;
+import com.example.Project.ECommerce.Repository.CategoryMetadataFieldRepository;
+import com.example.Project.ECommerce.Repository.CategoryMetadataFieldValuesRepository;
 import com.example.Project.ECommerce.Repository.ProductReviewRepository;
 import com.example.Project.ECommerce.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,11 @@ public class Bootstrap implements ApplicationRunner {
     UserRepository userRepository;
     @Autowired
     ProductReviewRepository productReviewRepository;
+    @Autowired
+        CategoryMetadataFieldRepository categoryMetadataFieldRepository;
+
+    @Autowired
+        CategoryMetadataFieldValuesRepository categoryMetadataFieldValuesRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -61,14 +68,14 @@ public class Bootstrap implements ApplicationRunner {
             Category TVCategory = new Category("TV");
 
             //phone sub category
-            Category phoneCategory1=new Category("Samsung");
-            Category phoneCategory2=new Category("Nokia");
-            Category phoneCategory3=new Category("Apple");
+            Category phoneCategory1=new Category("smart Phone1");
+            Category phoneCategory2=new Category("Keypad Phone");
+            Category phoneCategory3=new Category("Smart Phone");
 
             //Tv sub category
-            Category TVCategory1=new Category("Samsung");
-            Category TVCategory2=new Category("LG");
-            Category TVCategory3=new Category("VideoCon");
+            Category TVCategory1=new Category("Smart Tv");
+            Category TVCategory2=new Category("LED Tv");
+            Category TVCategory3=new Category("LCD tv");
 
             //adding to set
             categorySet.add(phoneCategory);
@@ -252,7 +259,13 @@ public class Bootstrap implements ApplicationRunner {
             userRepository.save(seller1);
             userRepository.save(seller2);
             userRepository.save(seller3);
-            
+
+            CategoryMetadataField categoryMetadataField=new CategoryMetadataField();
+            categoryMetadataField.setName("storage");
+            categoryMetadataFieldRepository.save(categoryMetadataField);
+
+
+
 
 
     }

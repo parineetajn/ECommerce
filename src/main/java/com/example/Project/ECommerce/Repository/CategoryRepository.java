@@ -13,15 +13,15 @@ public interface CategoryRepository extends CrudRepository<Category,Long> {
             " where parent_id not in(select id " +
             "from Category " +
             "where parent_id is null)",nativeQuery = true)
-    List<Object[]> getCategory();
+    List<Object[]> getAllLeafSubCategory();
 
     @Query(value = "select categoryName from Category " +
             "where parent_id is null\n",nativeQuery = true)
     List<Object[]> getParentCategory();
 
     @Query(value = "select categoryName from Category " +
-            "where parent_id =:id)",nativeQuery = true)
-    List<Object[]> getSubCategory(@Param("id") int id);
+            "where parent_id=:id",nativeQuery = true)
+    List<Object[]> getSubCategory(@Param("id") long id);
 
     @Query(value = "select id from Category " +
             "where categoryName=:name",nativeQuery = true)
