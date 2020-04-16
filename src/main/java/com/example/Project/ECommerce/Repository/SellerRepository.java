@@ -4,10 +4,12 @@ import com.example.Project.ECommerce.Entity.Seller;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface SellerRepository extends PagingAndSortingRepository<Seller,Integer> {
+@Repository
+public interface SellerRepository extends PagingAndSortingRepository<Seller,Long> {
     Seller findByUsername(String username);
 
     @Query(value = "select s.id,firstName,lastName,companyContact,companyName,GST,city,state,country,addressLine,zipCode from Seller s " +

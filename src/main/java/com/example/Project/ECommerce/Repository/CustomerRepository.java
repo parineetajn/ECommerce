@@ -5,10 +5,12 @@ import com.example.Project.ECommerce.Entity.Customer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CustomerRepository extends PagingAndSortingRepository<Customer,Integer> {
+@Repository
+public interface CustomerRepository extends PagingAndSortingRepository<Customer,Long> {
     Customer findByUsername(String username);
 
     @Query(value = "select c.id,firstName,lastName,contact,city,state,country,addressLine,zipCode from Customer c " +

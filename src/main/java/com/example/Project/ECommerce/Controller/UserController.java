@@ -1,9 +1,9 @@
 package com.example.Project.ECommerce.Controller;
 
 import com.example.Project.ECommerce.Entity.Address;
-import com.example.Project.ECommerce.Entity.Customer;
 import com.example.Project.ECommerce.Entity.Product;
-import com.example.Project.ECommerce.PasswordValidation.passwordValidatorConstraint;
+import com.example.Project.ECommerce.Exceptions.PasswordAndConfirmPasswordMismatchException;
+import com.example.Project.ECommerce.PasswordValidation.PasswordValidatorConstraint;
 import com.example.Project.ECommerce.Repository.AddressRepository;
 import com.example.Project.ECommerce.Repository.CustomerRepository;
 import com.example.Project.ECommerce.Repository.ProductRepository;
@@ -23,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    private TokenStore tokenStore;
+    TokenStore tokenStore;
 
     @Autowired
     UserRepository userRepository;
@@ -73,69 +74,36 @@ public class UserController {
         return "Welcome to the home page";
     }
 
-    @PostMapping("/verify")
-    public void verifyToken(@RequestParam(name = "token") String token) {
-        tokenService.verifyToken(token);
-        System.out.println("token verified..");
-    }
-
-    @PutMapping("/editName")
-    public void editName(@RequestParam(name = "username")String username) {
+    @PutMapping("/updateName")
+    public String editName(@RequestParam(name = "username")String username) {
             String username1 = getCurrentLoggedInUser.getCurrentUser();
             User user1 = userRepository.findByUsername(username1);
             user1.setUsername(username);
             userRepository.save(user1);
+            return "Name Updated!";
         }
 
     @PutMapping("/updateAddress/{address_id}")
-    public String editAddress(@PathVariable(name = "address_id")int address_id,@RequestBody Address address){
-        String username= getCurrentLoggedInUser.getCurrentUser();
-        Customer customer= customerRepository.findByUsername(username);
-        Optional<Address> addressOptional=addressRepository.findById(address_id);
-        if(addressOptional.isPresent()){
-            Address address1=addressOptional.get();
-            if(address.getAddressLine()!=null){
-                address1.setAddressLine(address.getAddressLine());
-            }
-            if(address.getCity()!=null){
-                address1.setCity(address.getCity());
-            }
-            if(address.getCountry()!=null){
-                address1.setCountry(address.getCountry());
-            }
-            if(address.getState()!=null){
-                address1.setState(address.getState());
-            }
-            if (address.getLabel()!=null){
-                address1.setLabel(address.getLabel());
-            }
-            if(address.getZipCode()!=0){
-                address1.setZipCode(address.getZipCode());
-            }
-
-            customer.addAddress(address1);
-            customerRepository.save(customer);
-        }
-        else {
-            return "Address with id: " + address_id + " does not exist!";
-        }
-        return "Address updated!";
+    public String editAddress(@PathVariable(name = "address_id")long address_id,
+                              @Valid @RequestBody Address address){
+          return userService.updateAddress(address,address_id);
 
     }
 
     @PostMapping("/forgetPassword")
-    public void forgetPassword(@RequestParam(name = "email") String email) {
-        User user1 = userRepository.findByEmail(email);
+    public void forgetPassword() {
+        String username = getCurrentLoggedInUser.getCurrentUser();
+        User user1 = userRepository.findByUsername(username);
         if (user1 != null) {
             mailSenderService.sendPasswordResetTokenMail(user1);
         } else
-            throw new UserNotFoundException("User with email : " + email + " not found");
+            throw new UserNotFoundException("User with username : " + username + " not found");
     }
 
     @PutMapping("/resetPassword")
     public String resetPassword(@RequestParam(name = "token",required = false) String token,
-                              @RequestParam(value = "password") @passwordValidatorConstraint String password,
-                              @RequestParam(value = "confirmPassword") @passwordValidatorConstraint String confirmPassword){
+                              @RequestParam(value = "password") @PasswordValidatorConstraint String password,
+                              @RequestParam(value = "confirmPassword") String confirmPassword){
         String username = getCurrentLoggedInUser.getCurrentUser();
         if(token!=null){
             tokenService.verifyToken(token);
@@ -149,17 +117,18 @@ public class UserController {
             return "Password Updated!";
         }
         else
-            return "Token invalid or Password Does not match!";
+            throw new PasswordAndConfirmPasswordMismatchException("Password and confirm password are not same!");
     }
+
     @GetMapping("/viewProduct/{productId}")
-    public Object getProduct(@PathVariable(name = "productId")int productId){
+    public Object getProduct(@PathVariable(name = "productId")long productId){
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()){
             List<Object[]> prod=productRepository.findProduct(productId);
             return prod;
         }
         else
-            return "Product not found!!";
+            throw new UserNotFoundException("Product not found!");
     }
 
 

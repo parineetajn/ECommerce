@@ -1,15 +1,21 @@
 package com.example.Project.ECommerce.Entity;
 
+import com.example.Project.ECommerce.Utility.HashMapConverter;
+
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 public class Order_Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private long quantity;
     private double price;
-    private String product_variation_metadata;
+
+
+    @Convert(converter = HashMapConverter.class)
+    private Map<String, Object> product_variation_metadata;
 
     @OneToOne
     @JoinColumn(name = "Order_id")
@@ -25,17 +31,17 @@ public class Order_Product {
     public Order_Product() {
     }
 
-    public Order_Product(long quantity, double price, String product_variation_metadata) {
+    public Order_Product(long quantity, double price, Map<String, Object> product_variation_metadata) {
         this.quantity = quantity;
         this.price = price;
         this.product_variation_metadata = product_variation_metadata;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -55,11 +61,11 @@ public class Order_Product {
         this.price = price;
     }
 
-    public String getProduct_variation_metadata() {
+    public Map<String, Object> getProduct_variation_metadata() {
         return product_variation_metadata;
     }
 
-    public void setProduct_variation_metadata(String product_variation_metadata) {
+    public void setProduct_variation_metadata(Map<String, Object> product_variation_metadata) {
         this.product_variation_metadata = product_variation_metadata;
     }
 

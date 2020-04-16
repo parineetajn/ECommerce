@@ -14,7 +14,6 @@ password:Pass@1234
 ~forget password token
 >type:POST
 >url:localhost:8080/forgetPassword
->request param:email
 
 ~reset password
 >type:PUT
@@ -22,15 +21,16 @@ password:Pass@1234
 >request param:-token(optional)
                -password
                -confirmPassword
-
+**********************************************************
 ***********************ADMIN API'S************************
+**********************************************************
 ~admin home
 >type:GET
 >url:localhost:8080/admin/home
 
-~edit name
+~update name
 >type:PUT
->url:localhost:8080/editName
+>url:localhost:8080/updateName
 >request param:-username
 
 ~get all registered customers
@@ -64,76 +64,91 @@ password:Pass@1234
 
 ~view a product
 >type:GET
->url:localhost:8080/viewProduct/{productId}
+>url:localhost:8080/viewProduct/{product_id}
 
 ~view all active products
 >type:GET
 >url:localhost:8080/listOfAdminProducts
+**********************************************************
 ***********************SELLER API's***********************
+**********************************************************
 ~register seller
 >type:POST
->url:localhost:8080/register/seller
+>url:localhost:8080/seller/register
 
 ~view Profile
 >type:GET
->url:localhost:8080/myProfile/seller
+>url:localhost:8080/seller/myProfile
 
 ~edit Company details
 >type:PUT
->url:localhost:8080/editCompanyDetails
+>url:localhost:8080/seller/editCompanyDetails
 
 ~update address
 >type:PUT
->url:http://localhost:8080/updateAddress/{address_id}
+>url:localhost:8080/seller/updateAddress/{address_id}
 
 ~view all products
 >type:GET
->url:localhost:8080/listOfSellerProducts
+>url:localhost:8080/seller/listOfProducts
 
-~view all variations of a product
->type:GET
->url:localhost:8080/getProductVariations/{productId}
+~add Product
+>type:POST
+>url:localhost:8080/seller/addProduct/{category_id}
+
+~update product
+>type:PUT
+>url:localhost:8080/seller/updateProduct/{product_id}
 
 ~delete product
 >type:DELETE
->url:localhost:8080/deleteProduct
->request param:-productId
+>url:localhost:8080/seller/deleteProduct
+>request param:-product_id
 
+~view all variations of a product
+>type:GET
+>url:localhost:8080/seller/getProductVariations/{product_id}
+
+~add Product Variation
+>type:POST
+>url:localhost:8080/seller/addProductVariation/{product_id}
+*********************************************************
 ***********************CUSTOMER API's********************
+*********************************************************
 ~register customer
 >type:POST
->url:localhost:8080/register/customer
+>url:localhost:8080/customer/register
 
 ~view Profile
 >type:GET
->url:localhost:8080/myProfile/customer
+>url:localhost:8080/customer/myProfile
 
-~edit name
+~update name
 >type:PUT
->url:localhost:8080/editName
+>url:localhost:8080/updateName
 >request param:-username
 
 ~add Address
 >type:POST
->url:localhost:8080/addAddress
+>url:localhost:8080/customer/addAddress
 >request body:-address
 
 ~view Address
 >type:GET
->url:localhost:8080/viewAddress
+>url:localhost:8080/customer/viewAddress
 
 ~update address
 >type:PUT
->url:http://localhost:8080/updateAddress/{address_id}
+>url:localhost:8080/updateAddress/{address_id}
 
 ~delete Address
 >type:DELETE
->url:localhost:8080/deleteAddress/{Address_id}
+>url:localhost:8080/customer/deleteAddress/{Address_id}
 
 ~view a product
 >type:GET
->url:localhost:8080/viewProduct/{productId}
+>url:localhost:8080/customer/viewProduct/{product_id}
 
 ~view all variations of a product based on category id
 >type:GET
->url:localhost:8080/listOfProducts/{categoryId}
+>url:localhost:8080/customer/listOfProducts/{category_id}

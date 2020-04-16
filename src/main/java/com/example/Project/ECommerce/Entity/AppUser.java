@@ -1,6 +1,6 @@
 package com.example.Project.ECommerce.Entity;
 
-import com.example.Project.ECommerce.PasswordValidation.passwordValidatorConstraint;
+import com.example.Project.ECommerce.PasswordValidation.PasswordValidatorConstraint;
 import com.example.Project.ECommerce.Security.GrantAuthorityImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,12 +16,11 @@ public class AppUser implements UserDetails {
     @NotEmpty
     @Column(unique = true)
     private String username;
-    @passwordValidatorConstraint
+    @PasswordValidatorConstraint
     @NotEmpty
     private String password;
     @Transient
     @NotEmpty
-    @passwordValidatorConstraint
     private String confirmPassword;
     List<GrantAuthorityImpl> grantAuthorities;
     private boolean isEnabled;

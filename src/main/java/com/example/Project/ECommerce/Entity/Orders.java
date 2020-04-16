@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private double amountPaid;
     private LocalDateTime dateCreated;
     private String paymentMethod;
@@ -27,6 +27,9 @@ public class Orders {
     @JoinColumn(name = "Customer_User_id")
     private Customer customer;
 
+    public Orders() {
+    }
+
     public Orders(double amountPaid, LocalDateTime dateCreated, String paymentMethod, String customerAddressCity, String customerAddressState, String customerAddressCountry, String customerAddressAddressLine, int customerAddressZipCode, String customerAddressLabel) {
         this.amountPaid = amountPaid;
         this.dateCreated = dateCreated;
@@ -39,11 +42,11 @@ public class Orders {
         this.customerAddressLabel = customerAddressLabel;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

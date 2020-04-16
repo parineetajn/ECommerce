@@ -5,15 +5,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface ProductRepository extends CrudRepository<Product,Integer> {
+@Repository
+public interface ProductRepository extends CrudRepository<Product,Long> {
 
     @Query(value = "select id from Product " +
             "where name=:name",nativeQuery = true)
-    Integer findProductId(@Param( value="name")String name);
+    Long findProductId(@Param( value="name")String name);
 
     @Query(value = "select * from Product " +
             "where name=:name",nativeQuery = true)
@@ -23,14 +25,14 @@ public interface ProductRepository extends CrudRepository<Product,Integer> {
             "from Product p inner join Category c on p.category_id=c.id " +
             "inner join ProductVariation pv on p.id=pv.product_id" +
             " where p.is_Active=true and p.id=:id",nativeQuery = true)
-    List<Object[]>findProduct(@Param(value = "id")int id);
+    List<Object[]>findProduct(@Param(value = "id")long id);
 
 
     @Query(value = "select  p.name,p.brand,p.is_Returnable,c.categoryName,pv.primaryImageName " +
             "from Product p inner join Category c on p.category_id=c.id" +
             " inner join ProductVariation pv on p.id=pv.product_id " +
             "where p.is_Active=true and c.parent_id=:id",nativeQuery = true)
-    List<Object[]> findProductList(@Param(value = "id")int id);
+    List<Object[]> findProductList(@Param(value = "id")long id);
 
     @Query(value = "select  p.name,p.brand,p.is_Returnable,c.categoryName,pv.primaryImageName " +
             "from Product p inner join Category c on p.category_id=c.id" +
@@ -52,12 +54,12 @@ public interface ProductRepository extends CrudRepository<Product,Integer> {
             "inner join ProductReview pr on p.id=pr.product_id " +
             "inner join Seller s on s.id=p.seller_user_id " +
             "inner join User u on u.id =s.id "+
-            "where p.name= :name",nativeQuery = true)
-    List<Object[]> findProductDetails(@Param(value = "name")String name);
+            "where p.category_id=:id",nativeQuery = true)
+    List<Object[]> findProductDetails(@Param(value = "id")long id);
 
     @Transactional
     @Modifying
     @Query(value = "delete from Product " +
             "where id=:id",nativeQuery = true)
-    void deleteProduct(@Param(value = "id") int id);
+    void deleteProduct(@Param(value = "id") long id);
 }

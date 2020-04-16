@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,11 +31,11 @@ public class Bootstrap implements ApplicationRunner {
 
             //Demo Admin
             User admin = new User();
-            admin.setEmail("parittn2020@gmail.com");
-            admin.setUsername("admin");
+            admin.setUsername("parittn2020@gmail.com");
             admin.setFirstName("Parineeta");
             admin.setLastName("Jain");
             admin.setPassword(passwordEncoder.encode("Pass@1234"));
+            admin.setCreatedBy(admin.getUsername());
             admin.addRoles(new Role("ROLE_ADMIN"));
             admin.addAddress(new Address("Noida sec-144","UP","India","74hhdksjv",110095,"Office",admin));
             admin.addAddress(new Address("Karol Bagh","Delhi","India","53/16 gdc",110005,"home",admin));
@@ -43,9 +45,8 @@ public class Bootstrap implements ApplicationRunner {
             //Demo Customer
             Customer customer =new Customer();
             customer.setFirstName("customer1");
-            customer.setUsername("cust1");
+            customer.setUsername("parineeta1996@gmail.com");
             customer.setPassword(passwordEncoder.encode("Pass@1234"));
-            customer.setEmail("parineeta1996@gmail.com");
             customer.setContact("9873313200");
             customer.addRoles(new Role("ROLE_CUSTOMER"));
             customer.addAddress(new Address("Karol Bagh1","Delhi","India","53/16 gdc",110005,"home",customer));
@@ -106,7 +107,7 @@ public class Bootstrap implements ApplicationRunner {
             Product TvProduct1 = new Product("samsung1","it is a nice tv",true,true,"samsung",false);
             Product TvProduct2 = new Product("samsung2","it is a nice tv",true,true,"samsung",true);
             Product TvProduct3 = new Product("VideoCon","it is a nice tv",true,true,"VideoCon",true);
-            Product TvProduct4 = new Product("Lg","it is a nice tv",true,true,"LG",true);
+            Product TvProduct4 = new Product("Lg1","it is a nice tv",true,true,"LG",true);
             Product TvProduct5 = new Product("Lg ","it is a nice tv",true,true,"LG",true);
 
             PhoneProduct1.setCategoryInProduct(phoneCategory3);
@@ -153,9 +154,8 @@ public class Bootstrap implements ApplicationRunner {
 
             Seller seller1 = new Seller();
             seller1.setFirstName("seller1");
-            seller1.setUsername("sel1");
+            seller1.setUsername("atuljn100@gmail.com");
             seller1.setPassword(passwordEncoder.encode("Pass@1234"));
-            seller1.setEmail("parineeta1996@gmail.com");
             seller1.setGST("100193841737");
             seller1.setCompanyContact("982738641");
             seller1.setCompanyName("seller1.co");
@@ -165,9 +165,8 @@ public class Bootstrap implements ApplicationRunner {
 
             Seller seller2 = new Seller();
             seller2.setFirstName("seller2");
-            seller2.setUsername("sel2");
+            seller2.setUsername("jainsarita72@gmail.com");
             seller2.setPassword(passwordEncoder.encode("Pass@1234"));
-            seller2.setEmail("parineeta1996@gmail.com");
             seller2.setGST("100193841737");
             seller2.setCompanyContact("982738641");
             seller2.setCompanyName("seller2.co");
@@ -177,9 +176,8 @@ public class Bootstrap implements ApplicationRunner {
 
             Seller seller3 = new Seller();
             seller3.setFirstName("seller3");
-            seller3.setUsername("sel3");
+            seller3.setUsername("anubhajn28@gmail.com");
             seller3.setPassword(passwordEncoder.encode("Pass@1234"));
-            seller3.setEmail("parineeta1996@gmail.com");
             seller3.setGST("100193841737");
             seller3.setCompanyContact("982738641");
             seller3.setCompanyName("seller.co");
@@ -254,6 +252,8 @@ public class Bootstrap implements ApplicationRunner {
             userRepository.save(seller1);
             userRepository.save(seller2);
             userRepository.save(seller3);
+            
+
 
     }
 }

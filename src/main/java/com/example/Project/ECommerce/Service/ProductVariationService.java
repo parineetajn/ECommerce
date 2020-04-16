@@ -19,9 +19,9 @@ public class ProductVariationService {
     @Autowired
     ProductVariationRepository productVariationRepository;
 
-    public void addProductVariation(ProductVariation productVariation, String productName){
+    public void addProductVariation(ProductVariation productVariation, long product_id){
 
-        Optional<Product> productOptional =productRepository.findById(productRepository.findProductId(productName));
+        Optional<Product> productOptional =productRepository.findById(product_id);
         Product product=productOptional.get();
         productVariation.setProduct(product);
         productVariation.setPrice(productVariation.getPrice());
@@ -30,8 +30,8 @@ public class ProductVariationService {
         productVariationRepository.save(productVariation);
     }
 
-    public List<Object[]> getProductVariation(int productId) {
-        List<Object[]> objects = productVariationRepository.getProductVariation(productId);
+    public List<Object[]> getProductVariation(long product_id){
+        List<Object[]> objects = productVariationRepository.getProductVariation(product_id);
         return objects;
     }
 }

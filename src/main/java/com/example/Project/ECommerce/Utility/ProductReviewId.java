@@ -6,30 +6,30 @@ import java.util.Objects;
 
 @Embeddable
 public class ProductReviewId implements Serializable {
-    private int Customer_User_id;
-    private int Product_id;
+    private long Customer_User_id;
+    private long Product_id;
 
     public ProductReviewId() {
     }
 
-    public ProductReviewId(int customer_User_id, int product_id) {
+    public ProductReviewId(long customer_User_id, long product_id) {
         Customer_User_id = customer_User_id;
         Product_id = product_id;
     }
 
-    public int getCustomer_User_id() {
+    public long getCustomer_User_id() {
         return Customer_User_id;
     }
 
-    public void setCustomer_User_id(int customer_User_id) {
+    public void setCustomer_User_id(long customer_User_id) {
         Customer_User_id = customer_User_id;
     }
 
-    public int getProduct_id() {
+    public long getProduct_id() {
         return Product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(long product_id) {
         Product_id = product_id;
     }
 

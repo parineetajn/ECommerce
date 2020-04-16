@@ -27,11 +27,25 @@ public class MailSenderService {
     private JavaMailSender javaMailSender;
 
     @Async
+    public void sendMailToAdmin(User user,String text) throws MailException{
+        System.out.println("Sending mail..");
+        SimpleMailMessage mail = new SimpleMailMessage();
+
+        mail.setTo(user.getUsername());
+        mail.setFrom("parittn2020@gmail.com");
+        mail.setSubject("Changes Made by user");
+        mail.setText(text);
+
+        javaMailSender.send(mail);
+
+        System.out.println("Mail sent..");
+    }
+    @Async
     public void sendLoginTokenMail(User user) throws MailException{
         System.out.println("Sending mail..");
         SimpleMailMessage mail = new SimpleMailMessage();
 
-        mail.setTo(user.getEmail());
+        mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Token for current login:");
         mail.setText(tokenService.getToken(user));
@@ -46,7 +60,7 @@ public class MailSenderService {
         System.out.println("Sending mail..");
         SimpleMailMessage mail = new SimpleMailMessage();
 
-        mail.setTo(user.getEmail());
+        mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Token to Reset your Password:");
         mail.setText(tokenService.getToken(user));
@@ -60,7 +74,7 @@ public class MailSenderService {
         System.out.println("Sending mail..");
         SimpleMailMessage mail = new SimpleMailMessage();
 
-        mail.setTo(user.getEmail());
+        mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Password Updated..");
         mail.setText("Your Password has been updated recently..");

@@ -3,9 +3,9 @@ package com.example.Project.ECommerce.PasswordValidation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PasswordValidator implements ConstraintValidator<passwordValidatorConstraint,String> {
+public class PasswordValidator implements ConstraintValidator<PasswordValidatorConstraint,String> {
     @Override
-    public void initialize(passwordValidatorConstraint constraintAnnotation) {
+    public void initialize(PasswordValidatorConstraint constraintAnnotation) {
 
     }
 

@@ -8,13 +8,14 @@ import java.util.Set;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @NotEmpty
+    @Column(unique = true)
     private String name;
+    private String brand;
     private String description;
     private boolean is_Cancellable;
     private boolean is_Returnable;
-    private String brand;
     private boolean is_Active;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -25,7 +26,7 @@ public class Product {
     @JoinColumn(name = "seller_user_id")
     private Seller seller;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductReview> productReviews;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -43,11 +44,11 @@ public class Product {
         this.is_Active = is_Active;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

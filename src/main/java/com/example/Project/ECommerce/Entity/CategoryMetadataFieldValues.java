@@ -4,6 +4,7 @@ import com.example.Project.ECommerce.Utility.CategoryMetadataFieldValuesId;
 
 import javax.persistence.*;
 
+@Entity
 public class CategoryMetadataFieldValues {
     @EmbeddedId
     private CategoryMetadataFieldValuesId id = new CategoryMetadataFieldValuesId();
@@ -19,6 +20,7 @@ public class CategoryMetadataFieldValues {
     private CategoryMetadataField categoryMetadataField;
 
     private String value;
+
 
     public CategoryMetadataFieldValues() {
     }
@@ -60,6 +62,7 @@ public class CategoryMetadataFieldValues {
     public void setValue(String value) {
         this.value = value;
     }
+
 
     @Override
     public String toString() {

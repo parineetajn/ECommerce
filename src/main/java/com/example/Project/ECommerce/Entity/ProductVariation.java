@@ -3,6 +3,7 @@ package com.example.Project.ECommerce.Entity;
 import com.example.Project.ECommerce.Utility.HashMapConverter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class ProductVariation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private long quantity_available;
     private double price;
     private String primaryImageName;
@@ -25,10 +26,10 @@ public class ProductVariation {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToMany(mappedBy = "productVariation",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productVariation",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Cart> carts;
 
-    @OneToMany(mappedBy = "productVariation",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productVariation",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Order_Product> order_products;
 
     public ProductVariation() {
@@ -41,11 +42,12 @@ public class ProductVariation {
         this.isActive = isActive;
     }
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -111,6 +113,14 @@ public class ProductVariation {
 
     public void setOrder_products(Set<Order_Product> order_products) {
         this.order_products = order_products;
+    }
+
+    public void addOrderProduct(Order_Product orderProduct){
+        if(orderProduct != null){
+            if(order_products == null)
+                order_products = new LinkedHashSet<>();
+            order_products.add(orderProduct);
+        }
     }
 
     @Override

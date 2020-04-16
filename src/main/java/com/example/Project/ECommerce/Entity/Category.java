@@ -2,13 +2,14 @@ package com.example.Project.ECommerce.Entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @NotEmpty
     private String categoryName;
 
@@ -22,6 +23,9 @@ public class Category {
     @OneToMany(mappedBy = "categoryInProduct",cascade = CascadeType.ALL)
     private Set<Product> products;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CategoryMetadataFieldValues> categoryMetadataFieldValuesSet;
+
     public Category() {
     }
 
@@ -29,11 +33,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -69,6 +73,30 @@ public class Category {
         this.products = products;
     }
 
+    public void addSubCategory(Category category){
+        if(category != null){
+            if(categories == null)
+                categories = new HashSet<>();
+            categories.add(category);
+            category.setCategory(this);
+        }
+    }
+    public void addProduct(Product product){
+        if(product != null){
+            if(products == null)
+                products = new HashSet<Product>();
+            products.add(product);
+            product.setCategoryInProduct(this);
+        }
+    }
+    public void addFieldValues(CategoryMetadataFieldValues categoryMetadataFieldValues){
+        if(categoryMetadataFieldValues != null){
+            if(categoryMetadataFieldValuesSet==null)
+                categoryMetadataFieldValuesSet = new HashSet<>();
+            categoryMetadataFieldValuesSet.add(categoryMetadataFieldValues);
+            categoryMetadataFieldValues.setCategory(this);
+        }
+    }
     @Override
     public String toString() {
         return "Category{" +

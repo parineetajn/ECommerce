@@ -9,7 +9,7 @@ import java.util.List;
 public class Order_Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "Order_Product_id")
@@ -33,11 +33,11 @@ public class Order_Status {
         this.transition_notes_comments = transition_notes_comments;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

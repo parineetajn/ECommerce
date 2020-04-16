@@ -14,13 +14,13 @@ public class Customer extends User {
     @Pattern(regexp="(^$|[0-9]{10})")
     private String contact;
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductReview> productReviews;
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Orders> orders;
 
-    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Cart cart;
 
     public Customer() {
@@ -30,8 +30,8 @@ public class Customer extends User {
         this.contact = contact;
     }
 
-    public Customer(@NotEmpty @Email String email, @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}", message = "Password should contain 8-15 characters with at least 1 Lowercase, 1 Uppercase, 1 Special Character and 1 Number") String password, @NotEmpty @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}", message = "Password should contain 8-15 characters with at least 1 Lowercase, 1 Uppercase, 1 Special Character and 1 Number") String confirmPassword, boolean isDeleted, boolean isActive, boolean isEnable, @Pattern(regexp = "(^$|[0-9]{10})") String contact) {
-        super(email, username, firstName, middleName, lastName, password, confirmPassword, isDeleted, isActive, isEnable);
+    public Customer(@Email @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}", message = "Password should contain 8-15 characters with at least 1 Lowercase, 1 Uppercase, 1 Special Character and 1 Number") String password, @NotEmpty @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,15}", message = "Password should contain 8-15 characters with at least 1 Lowercase, 1 Uppercase, 1 Special Character and 1 Number") String confirmPassword, boolean isDeleted, boolean isActive, boolean isEnable, @Pattern(regexp = "(^$|[0-9]{10})") String contact) {
+        super(username, firstName, middleName, lastName, password, confirmPassword, isDeleted, isActive, isEnable);
         this.contact = contact;
     }
 

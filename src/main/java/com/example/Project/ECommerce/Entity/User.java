@@ -1,38 +1,55 @@
 package com.example.Project.ECommerce.Entity;
 
-import com.example.Project.ECommerce.PasswordValidation.passwordValidatorConstraint;
+import com.example.Project.ECommerce.PasswordValidation.PasswordValidatorConstraint;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Email
-    @NotEmpty
-    private String email;
     @NotEmpty
     @Column(unique = true)
     private String username;
     private String firstName;
     private String middleName;
     private String lastName;
-    @passwordValidatorConstraint
+    @PasswordValidatorConstraint
     @NotEmpty
     private String password;
     @Transient
     @NotEmpty
-    @passwordValidatorConstraint
     private String confirmPassword;
     private boolean isDeleted;
     private boolean isActive;
     private boolean isEnable;
+    @Column(name = "createdDate")
+    @CreatedDate
+    private LocalDateTime createdOn;
+
+    @Column(name = "modifiedDate")
+    @LastModifiedDate
+    private LocalDateTime modifiedOn;
+
+    @CreatedBy
+    private String createdBy;
+
+    @LastModifiedBy
+    private String modifiedBy;
 
     public boolean isEnable() {
         return true;
@@ -57,8 +74,7 @@ public class User {
     public User() {
     }
 
-    public User(@NotEmpty @Email String email, @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty String password, @NotEmpty String confirmPassword) {
-        this.email = email;
+    public User(@Email @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty String password, @NotEmpty String confirmPassword) {
         this.username = username;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -67,8 +83,7 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public User(@NotEmpty @Email String email, @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty String password, @NotEmpty String confirmPassword, boolean isDeleted, boolean isActive, boolean isEnable) {
-        this.email = email;
+    public User(@Email @NotEmpty String username, String firstName, String middleName, String lastName, @NotEmpty String password, @NotEmpty String confirmPassword, boolean isDeleted, boolean isActive, boolean isEnable) {
         this.username = username;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -80,20 +95,12 @@ public class User {
         this.isEnable = isEnable;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {
@@ -177,11 +184,42 @@ public class User {
         this.roles = roles;
     }
 
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getModifiedOn() {
+        return modifiedOn;
+    }
+
+    public void setModifiedOn(LocalDateTime modifiedOn) {
+        this.modifiedOn = modifiedOn;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", isDeleted=" + isDeleted +
                 ", isActive=" + isActive +
@@ -197,12 +235,12 @@ public class User {
         }
     }
 
-    public void addAddress(Address addresss) {
-        if (addresss != null) {
+    public void addAddress(Address address1) {
+        if (address1 != null) {
             if (address == null) {
                 address = new HashSet<>();
             }
-            address.add(addresss);
+            address.add(address1);
         }
     }
 

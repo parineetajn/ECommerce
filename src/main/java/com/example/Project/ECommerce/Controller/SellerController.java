@@ -1,5 +1,8 @@
 package com.example.Project.ECommerce.Controller;
 
+import com.example.Project.ECommerce.DTO.ProductDto;
+import com.example.Project.ECommerce.DTO.SellerRegisterDto;
+import com.example.Project.ECommerce.DTO.SellerViewProfileDto;
 import com.example.Project.ECommerce.Exceptions.UserNotAuthorizedException;
 import com.example.Project.ECommerce.Repository.*;
 import com.example.Project.ECommerce.Service.CategoryService;
@@ -42,47 +45,22 @@ public class SellerController {
     GetCurrentLoggedInUser getCurrentLoggedInUser;
 
     @Lazy
-    @PostMapping("/register/seller")
-    public void registerSeller(@Valid @RequestBody Seller seller) {
-        sellerService.registerSeller(seller);
+    @PostMapping("/sellerRegister")
+    public String sellerRegistration(@Valid @RequestBody SellerRegisterDto seller) {
+        return sellerService.registerSeller(seller);
     }
 
-    @GetMapping("/myProfile/seller")
-    public List<Object[]> viewProfile(){
-        String username = getCurrentLoggedInUser.getCurrentUser();
-        return sellerRepository.viewProfile(username);
+    @GetMapping("/seller/myProfile")
+    public SellerViewProfileDto viewProfile(){
+        return sellerService.viewProfile();
     }
 
-    @PutMapping("/updateProfile/seller")
-    public String editProfile(@RequestBody Seller seller){
-        String username= getCurrentLoggedInUser.getCurrentUser();
-        Seller seller1= sellerRepository.findByUsername(username);
-            if (seller.getEmail() != null) {
-                seller1.setEmail(seller.getEmail());
-            }
-            if (seller.getGST() != null) {
-                seller1.setGST(seller.getGST());
-            }
-            if (seller.getCompanyContact() != null) {
-                seller1.setCompanyContact(seller.getCompanyContact());
-            }
-            if (seller.getCompanyName() != null) {
-                seller1.setCompanyName(seller.getCompanyName());
-            }
-            if (seller.getFirstName() != null) {
-                seller1.setFirstName(seller.getFirstName());
-            }
-            if (seller.getLastName() != null) {
-                seller1.setLastName(seller.getLastName());
-            }
-            if (seller.getUsername() != null) {
-                seller1.setUsername(seller.getUsername());
-            }
-            sellerRepository.save(seller1);
-            return "Profile updated!";
+    @PutMapping("/seller/updateProfile")
+    public String editProfile(@RequestBody SellerViewProfileDto seller){
+        return sellerService.editProfile(seller);
     }
 
-    @PutMapping("/editCompanyDetails")
+    @PutMapping("/seller/editCompanyDetails")
     public void editCompanyDetails(@RequestBody Seller seller) {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
@@ -98,7 +76,7 @@ public class SellerController {
         ->update product
         ->delete product
       */
-    @GetMapping("/listOfSellerProducts")
+    @GetMapping("/seller/listOfProducts")
     public List<Object[]> getListOfProducts() {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
@@ -106,31 +84,18 @@ public class SellerController {
         return products;
     }
 
-   /* @PostMapping("/addProduct/{category}")
-    public void addProducts(@PathVariable(name = "category") String category, @RequestBody Product product) {
-        List<Object[]> objects = categoryService.getCategory();
-        for (Object[] objects1 : objects) {
-            if (objects1[0].toString().equals(category)) {
-                productService.addProduct(product,category);
-                break;
-            }
-        }
-    }*/
-
-    /*@PutMapping("/updateProduct/{productName}")
-    public void updateProduct(@PathVariable(name = "productName") String productName, @RequestBody Product product){
-        Product product1 = productRepository.findProductName(productName);
-        product1.setName(product.getName());
-        product1.setIs_Returnable(product.isIs_Returnable());
-        product1.setIs_Active(product.isIs_Active());
-        product1.setIs_Cancellable(product.isIs_Cancellable());
-        product1.setBrand(product.getBrand());
-        product1.setDescription(product.getDescription());
-        productRepository.save(product1);
+    @PostMapping("seller/addProduct/{category_id}")
+    public String addProducts(@PathVariable(name = "category_id") long category_id, @RequestBody ProductDto product) {
+    return productService.addNewProduct(product,category_id);
     }
-*/
-    @DeleteMapping("/deleteProduct")
-    public String deleteProduct(@RequestParam(name = "productId") int productId) {
+
+    @PutMapping("/seller/updateProduct/{product_id}")
+    public String updateProduct(@PathVariable(name = "product_id") long product_id, @RequestBody ProductDto product) {
+        return productService.updateProduct(product, product_id);
+    }
+
+    @DeleteMapping("/seller/deleteProduct")
+    public String deleteProduct(@RequestParam(name = "productId") long productId) {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
 
@@ -141,7 +106,7 @@ public class SellerController {
                 productRepository.deleteProduct(productId);
                 productVariationRepository.deleteProductVariation(productId);
             } else
-                return "You are not authorized seller to delete the product";
+                throw new UserNotAuthorizedException( "You are not authorized seller to delete the product");
         }else
             return "Product with id: "+productId+" is not Valid";
     return "Product with id: "+productId+ " deleted..";
@@ -151,25 +116,28 @@ public class SellerController {
         ->get productVariations
         ->add productVariation
      */
-    @GetMapping("/getProductVariations/{productId}")
-    public Object getProductVariation(@PathVariable(name = "productId")int productId){
-        Optional<Product> product= productRepository.findById(productId);
+    @GetMapping("/seller/getProductVariations/{product_id}")
+    public Object getProductVariation(@PathVariable(name = "product_id")long product_id){
+        Optional<Product> product= productRepository.findById(product_id);
         Product product1=product.get();
         if(product1.isIs_Active()) {
-            return productVariationService.getProductVariation(productId);
+            return productVariationService.getProductVariation(product_id);
         }
         else
             return "No Product Variations available!";
 
     }
 
-    /*@PostMapping("/addProductVariation/{productName}")
-    public void addProductVariation(@PathVariable(name = "productName") String productName, @RequestBody ProductVariation productVariation){
-        Product product1 = productRepository.findProductName(productName);
-        if(product1!=null){
-            productVariationService.addProductVariation(productVariation,productName);
+    @PostMapping("/seller/addProductVariation/{product_id}")
+    public String addProductVariation(@PathVariable(name = "product_id") long product_id, @RequestBody ProductVariation productVariation){
+        Optional<Product> product1 = productRepository.findById(product_id);
+        if(product1.isPresent()){
+            productVariationService.addProductVariation(productVariation,product_id);
+            return "Product variation of Product id :"+product_id+" added!";
+        }else {
+            throw new UserNotFoundException("No Product id :" + product_id + " found!");
         }
-    }*/
+    }
 
     /*Category API's
         ->get categories
