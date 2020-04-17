@@ -72,7 +72,7 @@ public class ProductVariationService {
                             String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadataAttributes());
                             productVariation.setMetadata(metadataInfo);
                             productVariation.setActive(true);
-                            productVariation.setQuantity_available(productVariation.getQuantity_available());
+                            productVariation.setQuantityAvailable(productVariation.getQuantityAvailable());
                             productVariation.setPrimaryImageName(productVariation.getPrimaryImageName());
                             productVariation.setPrice(productVariation.getPrice());
                             productVariationRepository.save(productVariation);
@@ -157,7 +157,7 @@ public class ProductVariationService {
                         Optional<ProductVariation> productVariation1 = productVariationRepository.findById(productVariation_id);
                         ProductVariation productVariation2 = productVariation1.get();
                         productVariation2.setActive(productVariation.isActive());
-                        productVariation2.setQuantity_available(productVariation.getQuantity_available());
+                        productVariation2.setQuantityAvailable(productVariation.getQuantityAvailable());
                         productVariation2.setPrice(productVariation.getPrice());
                         String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadataAttributes());
                         productVariation2.setMetadata(metadataInfo);
@@ -172,4 +172,17 @@ public class ProductVariationService {
     } else
             throw new UserNotFoundException("Product Not Found");
 }
+
+    public void checkAndUpdateQuantity(long productVariation_id, int requiredQuantity) {
+        Optional<ProductVariation> productVariationOptional = productVariationRepository.findById(productVariation_id);
+        ProductVariation productVariation = productVariationOptional.get();
+        int presentQuantity = productVariation.getQuantityAvailable();
+        int newQuantityAvailable = presentQuantity - requiredQuantity;
+        if (newQuantityAvailable < 0) {
+            throw new InputException("Ordered Quantity is not available!");
+        }
+        productVariation.setQuantityAvailable(newQuantityAvailable);
+        productVariationRepository.save(productVariation);
+
+    }
 }

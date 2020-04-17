@@ -40,8 +40,7 @@ public class ProductController {
     public List<Object[]> getListOfProducts() {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
-        List<Object[]> products = productRepository.findSellerProductList(username);
-        return products;
+        return productRepository.findSellerProductList(username);
     }
 
     @PostMapping("seller/addProduct/{category_id}")
@@ -55,21 +54,21 @@ public class ProductController {
     }
 
     @DeleteMapping("/seller/deleteProduct")
-    public String deleteProduct(@RequestParam(name = "productId") long productId) {
+    public String deleteProduct(@RequestParam(name = "productId") long product_id) {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
 
-        Optional<Product> productOptional = productRepository.findById(productId);
+        Optional<Product> productOptional = productRepository.findById(product_id);
         if(productOptional.isPresent()) {
             Product product = productOptional.get();
             if (seller1.getUsername().equals(product.getSeller().getUsername())) {
-                productRepository.deleteProduct(productId);
-                productVariationRepository.deleteProductVariation(productId);
+                productRepository.deleteProduct(product_id);
+                productVariationRepository.deleteProductVariation(product_id);
             } else
                 throw new UserNotAuthorizedException( "You are not authorized seller to delete the product");
         }else
-            return "Product with id: "+productId+" is not Valid";
-        return "Product with id: "+productId+ " deleted..";
+            return "Product with id: "+product_id+" is not Valid";
+        return "Product with id: "+product_id+ " deleted..";
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

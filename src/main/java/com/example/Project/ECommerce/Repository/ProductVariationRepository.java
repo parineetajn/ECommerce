@@ -34,5 +34,9 @@ public interface ProductVariationRepository extends PagingAndSortingRepository<P
             "where product_id=:id",nativeQuery = true)
     void deleteProductVariation(@Param(value = "id") long id);
 
+    @Query(value = "select price from ProductVariation where product_id=:id",nativeQuery = true)
+    Double getPrice(@Param(value = "id")long id);
+
+
 
 }

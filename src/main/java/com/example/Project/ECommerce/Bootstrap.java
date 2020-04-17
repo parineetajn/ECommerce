@@ -69,7 +69,7 @@ public class Bootstrap implements ApplicationRunner {
             Category TVCategory = new Category("TV");
 
             //phone sub category
-            Category phoneCategory1=new Category("smart Phone1");
+            Category phoneCategory1=new Category("3G Phone");
             Category phoneCategory2=new Category("Keypad Phone");
             Category phoneCategory3=new Category("Smart Phone");
 
@@ -164,6 +164,7 @@ public class Bootstrap implements ApplicationRunner {
             seller1.setFirstName("seller1");
             seller1.setUsername("atuljn100@gmail.com");
             seller1.setPassword(passwordEncoder.encode("Pass@1234"));
+            seller1.setCreatedBy("atuljn100@gmail.com");
             seller1.setGST("100193841737");
             seller1.setCompanyContact("982738641");
             seller1.setCompanyName("seller1.co");
@@ -212,41 +213,35 @@ public class Bootstrap implements ApplicationRunner {
             Set<ProductVariation> productVariationSet = new HashSet<>();
 
             ProductVariation PhoneProductVariation1 = new ProductVariation();
-            PhoneProductVariation1.setPrimaryImageName("32 GB ");
             PhoneProductVariation1.setPrice(45000);
-            PhoneProductVariation1.setQuantity_available(5);
+            PhoneProductVariation1.setQuantityAvailable(5);
             PhoneProductVariation1.setProduct(PhoneProduct1);
 
             ProductVariation PhoneProductVariation2 = new ProductVariation();
-            PhoneProductVariation2.setPrimaryImageName("64 GB ");
             PhoneProductVariation2.setPrice(60000);
-            PhoneProductVariation2.setQuantity_available(8);
+            PhoneProductVariation2.setQuantityAvailable(8);
             PhoneProductVariation2.setProduct(PhoneProduct1);
 
             ProductVariation PhoneProductVariation3 = new ProductVariation();
-            PhoneProductVariation3.setPrimaryImageName("128 GB ");
             PhoneProductVariation3.setPrice(90000);
-            PhoneProductVariation3.setQuantity_available(3);
+            PhoneProductVariation3.setQuantityAvailable(3);
             PhoneProductVariation3.setProduct(PhoneProduct1);
             PhoneProduct1.setProductVariations(productVariationSet);
 
             ProductVariation TVProductVariation1 = new ProductVariation();
-            TVProductVariation1.setPrimaryImageName("45 inch ");
             TVProductVariation1.setPrice(32000);
-            TVProductVariation1.setQuantity_available(15);
+            TVProductVariation1.setQuantityAvailable(15);
             TVProductVariation1.setProduct(TvProduct3);
 
             ProductVariation TVProductVariation2 = new ProductVariation();
-            TVProductVariation2.setPrimaryImageName("52 inch ");
             TVProductVariation2.setPrice(50000);
-            TVProductVariation2.setQuantity_available(12);
+            TVProductVariation2.setQuantityAvailable(12);
             TVProductVariation2.setProduct(TvProduct3);
             TvProduct3.setProductVariations(productVariationSet);
 
             ProductVariation TVProductVariation3 = new ProductVariation();
-            TVProductVariation3.setPrimaryImageName("45 inch ");
             TVProductVariation3.setPrice(32500);
-            TVProductVariation3.setQuantity_available(10);
+            TVProductVariation3.setQuantityAvailable(10);
             TVProductVariation3.setProduct(TvProduct1);
             TvProduct1.setProductVariations(productVariationSet);
 

@@ -4,7 +4,6 @@ import com.example.Project.ECommerce.Utility.HashMapConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ public class ProductVariation {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Positive
-    private long quantity_available;
+    private int quantityAvailable;
     @Positive
     private double price;
     private String primaryImageName;
@@ -39,8 +38,8 @@ public class ProductVariation {
     public ProductVariation() {
     }
 
-    public ProductVariation(long quantity_available, double price, String primaryImageName, boolean isActive) {
-        this.quantity_available = quantity_available;
+    public ProductVariation(int quantity_available, double price, String primaryImageName, boolean isActive) {
+        this.quantityAvailable = quantity_available;
         this.price = price;
         this.primaryImageName = primaryImageName;
         this.isActive = isActive;
@@ -55,12 +54,12 @@ public class ProductVariation {
         this.id = id;
     }
 
-    public long getQuantity_available() {
-        return quantity_available;
+    public int getQuantityAvailable() {
+        return quantityAvailable;
     }
 
-    public void setQuantity_available(long quantity_available) {
-        this.quantity_available = quantity_available;
+    public void setQuantityAvailable(int quantityAvailable) {
+        this.quantityAvailable = quantityAvailable;
     }
 
     public double getPrice() {
@@ -131,7 +130,6 @@ public class ProductVariation {
     public String toString() {
         return "ProductVariation{" +
                 "id=" + id +
-                ", quantity_available=" + quantity_available +
                 ", price=" + price +
                 ", primaryImageName='" + primaryImageName + '\'' +
                 ", isActive=" + isActive +
