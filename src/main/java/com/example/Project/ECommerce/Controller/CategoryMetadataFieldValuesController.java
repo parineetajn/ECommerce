@@ -1,6 +1,6 @@
 package com.example.Project.ECommerce.Controller;
 
-import com.example.Project.ECommerce.Entity.CategoryMetadataFieldValues;
+import com.example.Project.ECommerce.Entity.CategoryMetadataFieldValue;
 import com.example.Project.ECommerce.Repository.CategoryMetadataFieldValuesRepository;
 import com.example.Project.ECommerce.Service.CategoryMetadataFieldValuesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +17,20 @@ public class CategoryMetadataFieldValuesController {
     CategoryMetadataFieldValuesService categoryMetadataFieldValuesService;
 
     @PostMapping("/admin/addMetadataValues/{category_id}/{metadata_id}")
-    public String addCategoryMetadataFieldValues(@RequestBody CategoryMetadataFieldValues categoryMetadataFieldValues,
+    public String addCategoryMetadataFieldValues(@RequestBody CategoryMetadataFieldValue categoryMetadataFieldValue,
                                   @PathVariable(value = "category_id") long category_id,
                                   @PathVariable(value = "metadata_id") long metadata_id) {
-        categoryMetadataFieldValuesService.addCategoryMetadataFieldValues(categoryMetadataFieldValues, category_id, metadata_id);
+        categoryMetadataFieldValuesService.addCategoryMetadataFieldValues(categoryMetadataFieldValue, category_id, metadata_id);
         return "Metadata value added for metadata field with id: "+metadata_id;
 
     }
 
     @PutMapping("/admin/updateMetadataValues/{category_id}/{metadata_id}")
-    public String updateCategoryMetadataFieldValues(@RequestBody CategoryMetadataFieldValues categoryMetadataFieldValues,
+    public String updateCategoryMetadataFieldValues(@RequestBody CategoryMetadataFieldValue categoryMetadataFieldValue,
                                      @PathVariable(value = "category_id") long category_id,
                                      @PathVariable(value = "metadata_id") long metadata_id) {
 
-        categoryMetadataFieldValuesService.updateCategoryMetadataFieldValues(categoryMetadataFieldValues, category_id, metadata_id);
+        categoryMetadataFieldValuesService.updateCategoryMetadataFieldValues(categoryMetadataFieldValue, category_id, metadata_id);
         return "Metadata value updated!";
 
     }

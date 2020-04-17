@@ -1,6 +1,6 @@
 package com.example.Project.ECommerce.Entity;
 
-import com.example.Project.ECommerce.Enums.OrderStatus;
+import com.example.Project.ECommerce.Enums.Order_Status;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,21 +13,21 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Order_Status {
+public class OrderStatus {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @OneToOne
     @JoinColumn(name = "Order_Product_id")
-    private Order_Product order_product;
+    private OrderProduct order_product;
     @Enumerated(EnumType.STRING)
-    private OrderStatus From_Status;
+    private Order_Status From_Status;
     @ElementCollection
     @CollectionTable(name="Product_ToStatus")
     @Column(name="To_Status")
     @Enumerated(EnumType.STRING)
-    private List<OrderStatus> To_Status;
+    private List<Order_Status> To_Status;
     private String transition_notes_comments;
 
     @Column(name = "createdDate")
@@ -45,10 +45,10 @@ public class Order_Status {
     private String modifiedBy;
 
 
-    public Order_Status() {
+    public OrderStatus() {
     }
 
-    public Order_Status(Order_Product order_product, OrderStatus from_Status, List<OrderStatus> to_Status, String transition_notes_comments) {
+    public OrderStatus(OrderProduct order_product, Order_Status from_Status, List<Order_Status> to_Status, String transition_notes_comments) {
         this.order_product = order_product;
         From_Status = from_Status;
         To_Status = to_Status;
@@ -63,28 +63,28 @@ public class Order_Status {
         this.id = id;
     }
 
-    public Order_Product getOrder_product() {
+    public OrderProduct getOrder_product() {
         return order_product;
     }
 
-    public void setOrder_product(Order_Product order_product) {
+    public void setOrder_product(OrderProduct order_product) {
         this.order_product = order_product;
     }
 
-    public OrderStatus getFrom_Status() {
+    public Order_Status getFrom_Status() {
         return From_Status;
     }
 
-    public void setFrom_Status(OrderStatus from_Status) {
+    public void setFrom_Status(Order_Status from_Status) {
         From_Status = from_Status;
     }
 
 
-    public List<OrderStatus> getTo_Status() {
+    public List<Order_Status> getTo_Status() {
         return To_Status;
     }
 
-    public void setTo_Status(List<OrderStatus> to_Status) {
+    public void setTo_Status(List<Order_Status> to_Status) {
         To_Status = to_Status;
     }
 

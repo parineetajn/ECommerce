@@ -1,6 +1,5 @@
 package com.example.Project.ECommerce.Service;
 
-import com.example.Project.ECommerce.Entity.CategoryMetadataFieldValues;
 import com.example.Project.ECommerce.Entity.Product;
 import com.example.Project.ECommerce.Entity.ProductVariation;
 import com.example.Project.ECommerce.Entity.Seller;
@@ -12,6 +11,7 @@ import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -69,7 +69,7 @@ public class ProductVariationService {
                             }
                         }
                         if (count == newMap.size()) {
-                            String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadata());
+                            String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadataAttributes());
                             productVariation.setMetadata(metadataInfo);
                             productVariation.setActive(true);
                             productVariation.setQuantity_available(productVariation.getQuantity_available());
@@ -103,7 +103,7 @@ public class ProductVariationService {
         } else throw new UserNotFoundException("Product not Found!");
     }
 
-    public List<Object[]> getAllProductVariations(long product_id) {
+    public List<ProductVariation> getAllProductVariations(long product_id, Pageable pageable) {
         String seller = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(seller);
         Optional<Product> product = productRepository.findById(product_id);
@@ -112,8 +112,7 @@ public class ProductVariationService {
             Product product1 = product.get();
             if (product1.isIs_Active()) {
                 if ((product1.getSeller().getUsername()).equals(seller1.getUsername())) {
-                    List<Object[]> objects = productVariationRepository.getAllProductVariation(product_id);
-                    return objects;
+                    return productVariationRepository.getAllProductVariation(product_id,pageable);
                 } else
                     throw new UserNotAuthorizedException("You are not authorized to view the Product variations");
             } else
@@ -160,7 +159,7 @@ public class ProductVariationService {
                         productVariation2.setActive(productVariation.isActive());
                         productVariation2.setQuantity_available(productVariation.getQuantity_available());
                         productVariation2.setPrice(productVariation.getPrice());
-                        String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadata());
+                        String metadataInfo = objectMapper.writeValueAsString(productVariation.getMetadataAttributes());
                         productVariation2.setMetadata(metadataInfo);
                         productVariationRepository.save(productVariation2);
                     } else

@@ -6,8 +6,6 @@ import com.example.Project.ECommerce.Repository.AddressRepository;
 import com.example.Project.ECommerce.Service.CustomerService;
 import com.example.Project.ECommerce.Entity.*;
 import com.example.Project.ECommerce.Repository.CustomerRepository;
-import com.example.Project.ECommerce.Repository.ProductRepository;
-import com.example.Project.ECommerce.Repository.ProductReviewRepository;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -35,6 +33,11 @@ public class CustomerController {
     @PostMapping("/customerRegister")
     public String customerRegistration(@Valid @RequestBody CustomerRegisterDto customer) {
         return customerService.registerCustomer(customer);
+    }
+
+    @GetMapping("/reSendActivationLink/{username}")
+    public String resendActivationLink(@PathVariable(name = "username")String username){
+        return customerService.reSendActivationLink(username);
     }
 
     @GetMapping("/customer/myProfile")

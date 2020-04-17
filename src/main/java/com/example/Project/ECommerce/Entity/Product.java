@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @NotEmpty
     @Column(unique = true)
@@ -20,7 +20,8 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    private Category categoryInProduct;
+    private Category productCategory;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_user_id")
@@ -101,11 +102,11 @@ public class Product {
     }
 
     public Category getCategoryInProduct() {
-        return categoryInProduct;
+        return productCategory;
     }
 
     public void setCategoryInProduct(Category categoryInProduct) {
-        this.categoryInProduct = categoryInProduct;
+        this.productCategory = categoryInProduct;
     }
 
     public Seller getSeller() {

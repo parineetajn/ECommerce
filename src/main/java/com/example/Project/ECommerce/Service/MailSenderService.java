@@ -83,4 +83,19 @@ public class MailSenderService {
 
         System.out.println("Mail sent..");
     }
+
+    @Async
+    public void sendAccountLockingMail(User user) throws MailException{
+        System.out.println("Sending mail..");
+        SimpleMailMessage mail = new SimpleMailMessage();
+
+        mail.setTo(user.getUsername());
+        mail.setFrom("parittn2020@gmail.com");
+        mail.setSubject("Account Locked");
+        mail.setText("Your account has been Locked!! Due to 3 unsuccessful attempts..");
+
+        javaMailSender.send(mail);
+
+        System.out.println("Mail sent..");
+    }
 }

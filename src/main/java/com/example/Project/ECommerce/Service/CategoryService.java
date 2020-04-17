@@ -14,9 +14,8 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<Object[]> getAllLeafSubCategory() {
-        List<Object[]> objects = categoryRepository.getAllLeafSubCategory();
-        return objects;
+    public List<Category> getAllLeafSubCategory(Integer pageNo, Integer pageSize, String sortBy) {
+        return  categoryRepository.getAllLeafSubCategory();
     }
 
     public List<Object[]> getParentCategory() {
@@ -35,9 +34,7 @@ public class CategoryService {
             category1.setCategoryName(category.getCategoryName());
             categoryRepository.save(category1);
             return "category Updated!";
-
         } else
             throw new UserNotFoundException("Category with id: " + category_id + " not found!");
     }
-
 }

@@ -2,14 +2,13 @@ package com.example.Project.ECommerce.Service;
 
 import com.example.Project.ECommerce.DTO.CustomerRegisterDto;
 import com.example.Project.ECommerce.DTO.CustomerViewProfileDto;
-import com.example.Project.ECommerce.Entity.Address;
-import com.example.Project.ECommerce.Entity.Customer;
-import com.example.Project.ECommerce.Entity.Role;
-import com.example.Project.ECommerce.Entity.User;
+import com.example.Project.ECommerce.Entity.*;
 import com.example.Project.ECommerce.Exceptions.InputException;
 import com.example.Project.ECommerce.Exceptions.PasswordAndConfirmPasswordMismatchException;
+import com.example.Project.ECommerce.Exceptions.UserNotFoundException;
 import com.example.Project.ECommerce.Repository.AddressRepository;
 import com.example.Project.ECommerce.Repository.CustomerRepository;
+import com.example.Project.ECommerce.Repository.TokenRepository;
 import com.example.Project.ECommerce.Repository.UserRepository;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import org.modelmapper.ModelMapper;
@@ -27,7 +26,7 @@ public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
     @Autowired
-    AddressRepository addressRepository;
+    TokenRepository tokenRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -66,7 +65,6 @@ public class CustomerService {
             }
             else
                 throw new InputException("Phone number not valid..");
-
         }
         if (customer.getFirstName() != null) {
             customer1.setFirstName(customer.getFirstName());
@@ -118,6 +116,25 @@ public class CustomerService {
             }
         }
         return "success";
+    }
+
+    public String reSendActivationLink(String username)
+    {
+        User user= userRepository.findByUsername(username);
+        if(user==null)
+        {
+            throw new UserNotFoundException("User not found!!");
+        }else {
+            for (Token token: tokenRepository.findAll())
+            {
+                if(user.getUsername().equals(token.getTokenName()) && !user.isActive())
+                {
+                    tokenRepository.deleteById(token.getTokenId());
+                }
+            }
+            mailSenderService.sendLoginTokenMail(user);
+        }
+        return "Mail sent with re-send activation link..";
     }
 
 

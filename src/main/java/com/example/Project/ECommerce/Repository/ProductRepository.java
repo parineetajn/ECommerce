@@ -62,7 +62,13 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete from Product " +
-            "where id=:id",nativeQuery = true)
+    @Query(value = "delete from Product where id=:id",nativeQuery = true)
     void deleteProduct(@Param(value = "id") long id);
+
+    @Query(value = "select brand,description,name,categoryName,metadata,primaryImageName " +
+            "from Product p join Category c on p.category_id=c.id " +
+            "join ProductVariation pv on pv.product_id=p.id " +
+            "where category_id=:category_id",nativeQuery = true)
+    List<Object[]> getSimilarProducts(@Param(value = "category_id")long category_id);
+
 }

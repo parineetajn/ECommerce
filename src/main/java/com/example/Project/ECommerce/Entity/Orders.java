@@ -15,7 +15,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private double amountPaid;
     private LocalDateTime dateCreated;
@@ -43,7 +43,7 @@ public class Orders {
     private String modifiedBy;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<Order_Product> order_products;
+    private Set<OrderProduct> order_products;
 
     @ManyToOne
     @JoinColumn(name = "Customer_User_id")
@@ -176,11 +176,11 @@ public class Orders {
         this.modifiedBy = modifiedBy;
     }
 
-    public Set<Order_Product> getOrder_products() {
+    public Set<OrderProduct> getOrder_products() {
         return order_products;
     }
 
-    public void setOrder_products(Set<Order_Product> order_products) {
+    public void setOrder_products(Set<OrderProduct> order_products) {
         this.order_products = order_products;
     }
 

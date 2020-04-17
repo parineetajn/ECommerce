@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class CategoryMetadataFieldValues implements Serializable {
+public class CategoryMetadataFieldValue implements Serializable {
     @EmbeddedId
     private CategoryMetadataFieldValuesId id = new CategoryMetadataFieldValuesId();
 
@@ -22,11 +22,10 @@ public class CategoryMetadataFieldValues implements Serializable {
 
     private String value;
 
-
-    public CategoryMetadataFieldValues() {
+    public CategoryMetadataFieldValue() {
     }
 
-    public CategoryMetadataFieldValues(Category category, CategoryMetadataField categoryMetadataField, String value) {
+    public CategoryMetadataFieldValue(Category category, CategoryMetadataField categoryMetadataField, String value) {
         this.category = category;
         this.categoryMetadataField = categoryMetadataField;
         this.value = value;
@@ -63,7 +62,6 @@ public class CategoryMetadataFieldValues implements Serializable {
     public void setValue(String value) {
         this.value = value;
     }
-
 
     @Override
     public String toString() {

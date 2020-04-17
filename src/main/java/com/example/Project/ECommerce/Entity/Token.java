@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Token {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long tokenId;
     private String tokenName;
     private String randomToken;

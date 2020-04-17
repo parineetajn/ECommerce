@@ -2,13 +2,12 @@ package com.example.Project.ECommerce.Entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @NotEmpty
     @Column(unique = true)
@@ -21,11 +20,11 @@ public class Category {
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private Set<Category> categories;
 
-    @OneToMany(mappedBy = "categoryInProduct",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productCategory",cascade = CascadeType.ALL)
     private Set<Product> products;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<CategoryMetadataFieldValues> categoryMetadataFieldValuesSet;
+    private Set<CategoryMetadataFieldValue> categoryMetadataFieldValueSet;
 
     public Category() {
     }
@@ -72,6 +71,14 @@ public class Category {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Set<CategoryMetadataFieldValue> getCategoryMetadataFieldValueSet() {
+        return categoryMetadataFieldValueSet;
+    }
+
+    public void setCategoryMetadataFieldValueSet(Set<CategoryMetadataFieldValue> categoryMetadataFieldValueSet) {
+        this.categoryMetadataFieldValueSet = categoryMetadataFieldValueSet;
     }
 
     @Override

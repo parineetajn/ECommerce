@@ -4,10 +4,10 @@ import com.example.Project.ECommerce.Entity.CategoryMetadataField;
 import com.example.Project.ECommerce.Repository.CategoryMetadataFieldRepository;
 import com.example.Project.ECommerce.Service.CategoryMetadataFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,8 +28,12 @@ public class CategoryMetadataFieldController {
     }
 
     @GetMapping("/admin/getAllCategoryMetadataFields")
-    public List<Object[]> viewAllCategoryMetadataFields(){
-        return categoryMetadataFieldService.viewAllCategoryMetadataFields();
+    public List<CategoryMetadataField> viewAllCategoryMetadataFields(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
+                                                        @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
+                                                        @RequestParam(name = "sortBy", defaultValue = "id") String sortBy){
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+        List<CategoryMetadataField> categoryMetadataFieldList= categoryMetadataFieldService.viewAllCategoryMetadataFields(paging);
+        return categoryMetadataFieldList;
     }
 
 }

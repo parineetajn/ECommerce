@@ -9,13 +9,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Order_Product {
+public class OrderProduct {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Positive
     private long quantity;
@@ -43,17 +42,17 @@ public class Order_Product {
     private Orders order;
 
     @OneToOne
-    private Order_Status order_status;
+    private OrderStatus order_status;
 
     @ManyToOne
     @JoinColumn(name = "Product_Variation_Id")
     private ProductVariation productVariation;
 
-    public Order_Product() {
+    public OrderProduct() {
     }
 
 
-    public Order_Product(@Positive long quantity, @Positive double price, LocalDateTime createdOn, LocalDateTime modifiedOn, String createdBy, String modifiedBy, String product_variation_metadata) {
+    public OrderProduct(@Positive long quantity, @Positive double price, LocalDateTime createdOn, LocalDateTime modifiedOn, String createdBy, String modifiedBy, String product_variation_metadata) {
         this.quantity = quantity;
         this.price = price;
         this.createdOn = createdOn;
@@ -135,11 +134,11 @@ public class Order_Product {
         this.order = order;
     }
 
-    public Order_Status getOrder_status() {
+    public OrderStatus getOrder_status() {
         return order_status;
     }
 
-    public void setOrder_status(Order_Status order_status) {
+    public void setOrder_status(OrderStatus order_status) {
         this.order_status = order_status;
     }
 

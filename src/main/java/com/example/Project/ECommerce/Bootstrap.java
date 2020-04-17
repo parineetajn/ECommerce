@@ -5,6 +5,7 @@ import com.example.Project.ECommerce.Repository.CategoryMetadataFieldRepository;
 import com.example.Project.ECommerce.Repository.CategoryMetadataFieldValuesRepository;
 import com.example.Project.ECommerce.Repository.ProductReviewRepository;
 import com.example.Project.ECommerce.Repository.UserRepository;
+import com.example.Project.ECommerce.Utility.CategoryMetadataFieldValuesId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -263,10 +264,6 @@ public class Bootstrap implements ApplicationRunner {
             CategoryMetadataField categoryMetadataField=new CategoryMetadataField();
             categoryMetadataField.setName("storage");
             categoryMetadataFieldRepository.save(categoryMetadataField);
-
-
-
-
 
     }
 }

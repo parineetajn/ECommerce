@@ -101,6 +101,11 @@ public class ProductController {
         return "Review added!";
     }
 
+    @GetMapping("/customer/getSimilarProducts/{product_id}")
+    public List<Object[]> getSimilarProducts(@PathVariable(name = "product_id")long product_id){
+        return productService.getSimilarProducts(product_id);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -136,7 +141,9 @@ public class ProductController {
 
 
     @GetMapping("/admin/listOfProducts")
-    public List<Object[]> getListOfAdminProducts() {
+    public List<Object[]> getListOfAdminProducts(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
+                                                 @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
+                                                 @RequestParam(name = "sortBy", defaultValue = "id") String sortBy) {
         List<Object[]> products = productRepository.findAdminProductList();
         return products;
     }
