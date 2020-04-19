@@ -50,8 +50,8 @@ public class ProductService {
         Set<Product> productSet = new HashSet<>();
         Product product1= new Product();
         product1.setBrand(product.getBrand());
-        product1.setIs_Active(false);
-        product1.setIs_Cancellable(product.isIs_Cancellable());
+        product1.setActive(false);
+        product1.setCancellable(product.isCancellable());
         product1.setDescription(product.getDescription());
         product1.setName(product.getName());
         product1.setSeller(seller);
@@ -96,9 +96,9 @@ public class ProductService {
                 product1.setDescription(product.getDescription());
             }
             product1.setId(product_id);
-            product1.setIs_Returnable(product.isIs_Returnable());
-            product1.setIs_Active(product.isIs_Active());
-            product1.setIs_Cancellable(product.isIs_Cancellable());
+            product1.setReturnable(product.isIs_Returnable());
+            product1.setActive(product.isIs_Active());
+            product1.setCancellable(product.isIs_Cancellable());
             productRepository.save(product1);
             return "Product updated with id: " + product_id;
         } else {
@@ -108,7 +108,7 @@ public class ProductService {
 
 
     public void activateProductStatus(Product product) throws MailException {
-        product.setIs_Active(true);
+        product.setActive(true);
         System.out.println("Account activating... mail sending..");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(product.getSeller().getUsername());
@@ -122,7 +122,7 @@ public class ProductService {
     }
 
     public void deActivateProductStatus(Product product) throws MailException {
-        product.setIs_Active(false);
+        product.setActive(false);
         System.out.println("Account activating... mail sending..");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(product.getSeller().getUsername());

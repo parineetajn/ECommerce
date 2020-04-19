@@ -74,7 +74,7 @@ public class OrderService {
         orderProduct.setProductVariation(productVariation);
 
         OrderStatus orderStatus = new OrderStatus();
-        orderStatus.setFrom_Status(Order_Status.ORDER_PLACED);
+        orderStatus.setFromStatus(Order_Status.ORDER_PLACED);
         orderStatus.setOrder_product(orderProduct);
 
         orderRepository.save(orders);
@@ -93,9 +93,9 @@ public class OrderService {
         if ((product1.getSeller().getUsername()).equals(seller.getUsername())) {
             Optional<OrderStatus> orderStatusOptional = orderStatusRepository.findById(orderStatus_id);
             OrderStatus orderStatus1 = orderStatusOptional.get();
-            orderStatus1.setFrom_Status(orderStatus.getFrom_Status());
-            orderStatus1.setTo_Status(orderStatus.getTo_Status());
-            orderStatus1.setTransition_notes_comments(orderStatus.getTransition_notes_comments());
+            orderStatus1.setFromStatus(orderStatus.getFromStatus());
+            orderStatus1.setToStatus(orderStatus.getToStatus());
+            orderStatus1.setTransitionNotesComments(orderStatus.getTransitionNotesComments());
             orderStatusRepository.save(orderStatus1);
         } else {
             throw new UserNotAuthorizedException("you can't change the to status of this product");

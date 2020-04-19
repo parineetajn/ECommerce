@@ -14,9 +14,9 @@ public class Product {
     private String name;
     private String brand;
     private String description;
-    private boolean is_Cancellable;
-    private boolean is_Returnable;
-    private boolean is_Active;
+    private boolean isCancellable;
+    private boolean isReturnable;
+    private boolean isActive;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -36,13 +36,13 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NotEmpty String name, String description, boolean is_Cancellable, boolean is_Returnable, String brand, boolean is_Active) {
+    public Product(@NotEmpty String name, String description, boolean isCancellable, boolean isReturnable, String brand, boolean isActive) {
         this.name = name;
         this.description = description;
-        this.is_Cancellable = is_Cancellable;
-        this.is_Returnable = is_Returnable;
+        this.isCancellable = isCancellable;
+        this.isReturnable = isReturnable;
         this.brand = brand;
-        this.is_Active = is_Active;
+        this.isActive = isActive;
     }
 
     public long getId() {
@@ -69,20 +69,20 @@ public class Product {
         this.description = description;
     }
 
-    public boolean isIs_Cancellable() {
-        return is_Cancellable;
+    public boolean isCancellable() {
+        return isCancellable;
     }
 
-    public void setIs_Cancellable(boolean is_Cancellable) {
-        this.is_Cancellable = is_Cancellable;
+    public void setCancellable(boolean cancellable) {
+        this.isCancellable = cancellable;
     }
 
-    public boolean isIs_Returnable() {
-        return is_Returnable;
+    public boolean isReturnable() {
+        return isReturnable;
     }
 
-    public void setIs_Returnable(boolean is_Returnable) {
-        this.is_Returnable = is_Returnable;
+    public void setReturnable(boolean returnable) {
+        this.isReturnable = returnable;
     }
 
     public String getBrand() {
@@ -93,12 +93,12 @@ public class Product {
         this.brand = brand;
     }
 
-    public boolean isIs_Active() {
-        return is_Active;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setIs_Active(boolean is_Active) {
-        this.is_Active = is_Active;
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 
     public Category getCategoryInProduct() {
@@ -139,10 +139,10 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", is_Cancellable=" + is_Cancellable +
-                ", is_Returnable=" + is_Returnable +
+                ", is_Cancellable=" + isCancellable +
+                ", is_Returnable=" + isReturnable +
                 ", brand='" + brand + '\'' +
-                ", is_Active=" + is_Active +
+                ", is_Active=" + isActive +
                 '}';
     }
 

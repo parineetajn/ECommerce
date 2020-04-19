@@ -114,7 +114,7 @@ public class ProductController {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
             product1 = product.get();
-            if (product1.isIs_Active()) {
+            if (product1.isActive()) {
                 return "Product already activate!";
             } else {
                 productService.activateProductStatus(product1);
@@ -129,7 +129,7 @@ public class ProductController {
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
             product1 = product.get();
-            if (!product1.isIs_Active()) {
+            if (!product1.isActive()) {
                 return "Product already Deactivate!";
             } else {
                 productService.deActivateProductStatus(product1);

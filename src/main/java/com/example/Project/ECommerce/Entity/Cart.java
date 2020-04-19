@@ -20,7 +20,7 @@ public class Cart {
 
     @Size(min = 1)
     private long quantity;
-    private boolean is_WishList_Item;
+    private boolean isWishListItem;
 
     @Column(name = "createdDate")
     @CreatedDate
@@ -50,9 +50,9 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(@Size(min = 1) long quantity, boolean is_WishList_Item) {
+    public Cart(@Size(min = 1) long quantity, boolean isWishListItem) {
         this.quantity = quantity;
-        this.is_WishList_Item = is_WishList_Item;
+        this.isWishListItem = isWishListItem;
     }
 
     public CartId getId() {
@@ -71,12 +71,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public boolean isIs_WishList_Item() {
-        return is_WishList_Item;
+    public boolean isWishListItem() {
+        return isWishListItem;
     }
 
-    public void setIs_WishList_Item(boolean is_WishList_Item) {
-        this.is_WishList_Item = is_WishList_Item;
+    public void setWishListItem(boolean wishListItem) {
+        this.isWishListItem = wishListItem;
     }
 
     public Customer getCustomer() {
@@ -132,7 +132,7 @@ public class Cart {
         return "Cart{" +
                 "id=" + id +
                 ", quantity=" + quantity +
-                ", is_WishList_Item=" + is_WishList_Item +
+                ", is_WishList_Item=" + isWishListItem +
                 '}';
     }
 }

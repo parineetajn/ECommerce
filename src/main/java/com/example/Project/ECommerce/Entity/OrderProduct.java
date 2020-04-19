@@ -17,7 +17,7 @@ public class OrderProduct {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Positive
-    private long quantity;
+    private int quantity;
     @Positive
     private double price;
 
@@ -52,7 +52,7 @@ public class OrderProduct {
     }
 
 
-    public OrderProduct(@Positive long quantity, @Positive double price, LocalDateTime createdOn, LocalDateTime modifiedOn, String createdBy, String modifiedBy, String product_variation_metadata) {
+    public OrderProduct(@Positive int quantity, @Positive double price, LocalDateTime createdOn, LocalDateTime modifiedOn, String createdBy, String modifiedBy, String product_variation_metadata) {
         this.quantity = quantity;
         this.price = price;
         this.createdOn = createdOn;
@@ -70,11 +70,11 @@ public class OrderProduct {
         this.id = id;
     }
 
-    public long getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

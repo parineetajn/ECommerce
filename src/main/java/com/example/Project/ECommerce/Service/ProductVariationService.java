@@ -43,7 +43,7 @@ public class ProductVariationService {
         Optional<Product> productOptional = productRepository.findById(product_id);
         if(productOptional.isPresent()){
                 Product product = productOptional.get();
-                if (product.isIs_Active()) {
+                if (product.isActive()) {
                     if ((product.getSeller().getUsername()).equals(seller.getUsername())) {
                         productVariation.setProduct(product);
                         Map<String, String> stringMap = new HashMap<String, String>();
@@ -92,7 +92,7 @@ public class ProductVariationService {
         Optional<Product> product = productRepository.findById(product_id);
         if (product.isPresent()) {
             Product product1 = product.get();
-            if (product1.isIs_Active()) {
+            if (product1.isActive()) {
                 if ((product1.getSeller().getUsername()).equals(seller1.getUsername())) {
                     List<Object[]> objects = productVariationRepository.getProductVariation(product_id);
                     return objects;
@@ -110,7 +110,7 @@ public class ProductVariationService {
 
         if (product.isPresent()) {
             Product product1 = product.get();
-            if (product1.isIs_Active()) {
+            if (product1.isActive()) {
                 if ((product1.getSeller().getUsername()).equals(seller1.getUsername())) {
                     return productVariationRepository.getAllProductVariation(product_id,pageable);
                 } else
@@ -129,7 +129,7 @@ public class ProductVariationService {
         Optional<ProductVariation> productVariationOptional = productVariationRepository.findById(productVariation_id);
         if (productVariationOptional.isPresent()) {
             Product product = productOptional.get();
-            if (product.isIs_Active()) {
+            if (product.isActive()) {
                 if ((product.getSeller().getUsername()).equals(seller.getUsername())) {
                     Map<String, String> stringMap = new HashMap<String, String>();
                     Map<String, Object> newMap = productVariation.getMetadataAttributes();

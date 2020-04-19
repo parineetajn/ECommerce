@@ -22,13 +22,13 @@ public class OrderStatus {
     @JoinColumn(name = "Order_Product_id")
     private OrderProduct order_product;
     @Enumerated(EnumType.STRING)
-    private Order_Status From_Status;
+    private Order_Status fromStatus;
     @ElementCollection
     @CollectionTable(name="Product_ToStatus")
     @Column(name="To_Status")
     @Enumerated(EnumType.STRING)
-    private List<Order_Status> To_Status;
-    private String transition_notes_comments;
+    private List<Order_Status> toStatus;
+    private String transitionNotesComments;
 
     @Column(name = "createdDate")
     @CreatedDate
@@ -48,11 +48,11 @@ public class OrderStatus {
     public OrderStatus() {
     }
 
-    public OrderStatus(OrderProduct order_product, Order_Status from_Status, List<Order_Status> to_Status, String transition_notes_comments) {
+    public OrderStatus(OrderProduct order_product, Order_Status fromStatus, List<Order_Status> toStatus, String transitionNotesComments) {
         this.order_product = order_product;
-        From_Status = from_Status;
-        To_Status = to_Status;
-        this.transition_notes_comments = transition_notes_comments;
+        this.fromStatus = fromStatus;
+        this.toStatus = toStatus;
+        this.transitionNotesComments = transitionNotesComments;
     }
 
     public long getId() {
@@ -71,29 +71,29 @@ public class OrderStatus {
         this.order_product = order_product;
     }
 
-    public Order_Status getFrom_Status() {
-        return From_Status;
+    public Order_Status getFromStatus() {
+        return fromStatus;
     }
 
-    public void setFrom_Status(Order_Status from_Status) {
-        From_Status = from_Status;
+    public void setFromStatus(Order_Status fromStatus) {
+        this.fromStatus = fromStatus;
     }
 
 
-    public List<Order_Status> getTo_Status() {
-        return To_Status;
+    public List<Order_Status> getToStatus() {
+        return toStatus;
     }
 
-    public void setTo_Status(List<Order_Status> to_Status) {
-        To_Status = to_Status;
+    public void setToStatus(List<Order_Status> toStatus) {
+        this.toStatus = toStatus;
     }
 
-    public String getTransition_notes_comments() {
-        return transition_notes_comments;
+    public String getTransitionNotesComments() {
+        return transitionNotesComments;
     }
 
-    public void setTransition_notes_comments(String transition_notes_comments) {
-        this.transition_notes_comments = transition_notes_comments;
+    public void setTransitionNotesComments(String transitionNotesComments) {
+        this.transitionNotesComments = transitionNotesComments;
     }
 
     public LocalDateTime getCreatedOn() {
@@ -132,9 +132,9 @@ public class OrderStatus {
     public String toString() {
         return "Order_Status{" +
                 "id=" + id +
-                ", From_Status=" + From_Status +
-                ", To_Status=" + To_Status +
-                ", transition_notes_comments='" + transition_notes_comments + '\'' +
+                ", From_Status=" + fromStatus +
+                ", To_Status=" + toStatus +
+                ", transition_notes_comments='" + transitionNotesComments + '\'' +
                 '}';
     }
 }
