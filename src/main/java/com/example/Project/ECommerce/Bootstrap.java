@@ -42,6 +42,7 @@ public class Bootstrap implements ApplicationRunner {
             admin.setUsername("parittn2020@gmail.com");
             admin.setFirstName("Parineeta");
             admin.setLastName("Jain");
+            admin.setEnable(true);
             admin.setPassword(passwordEncoder.encode("Pass@1234"));
             admin.setCreatedBy(admin.getUsername());
             admin.addRoles(new Role("ROLE_ADMIN"));
@@ -55,6 +56,7 @@ public class Bootstrap implements ApplicationRunner {
             customer.setFirstName("customer1");
             customer.setUsername("parineeta1996@gmail.com");
             customer.setPassword(passwordEncoder.encode("Pass@1234"));
+            customer.setEnable(true);
             customer.setContact("9873313200");
             customer.addRoles(new Role("ROLE_CUSTOMER"));
             customer.addAddress(new Address("Karol Bagh1","Delhi","India","53/16 gdc",110005,"home",customer));
@@ -163,6 +165,7 @@ public class Bootstrap implements ApplicationRunner {
             Seller seller1 = new Seller();
             seller1.setFirstName("seller1");
             seller1.setUsername("atuljn100@gmail.com");
+            seller1.setEnable(true);
             seller1.setPassword(passwordEncoder.encode("Pass@1234"));
             seller1.setCreatedBy("atuljn100@gmail.com");
             seller1.setGST("100193841737");
@@ -177,6 +180,7 @@ public class Bootstrap implements ApplicationRunner {
             seller2.setUsername("jainsarita72@gmail.com");
             seller2.setPassword(passwordEncoder.encode("Pass@1234"));
             seller2.setGST("100193841737");
+            seller2.setEnable(true);
             seller2.setCompanyContact("982738641");
             seller2.setCompanyName("seller2.co");
             seller2.addRoles(new Role("ROLE_SELLER"));
@@ -186,6 +190,7 @@ public class Bootstrap implements ApplicationRunner {
             Seller seller3 = new Seller();
             seller3.setFirstName("seller3");
             seller3.setUsername("anubhajn28@gmail.com");
+            seller3.setEnable(true);
             seller3.setPassword(passwordEncoder.encode("Pass@1234"));
             seller3.setGST("100193841737");
             seller3.setCompanyContact("982738641");

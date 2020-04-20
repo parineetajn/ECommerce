@@ -1,11 +1,16 @@
 package com.example.Project.ECommerce.Service;
 
 import com.example.Project.ECommerce.Entity.Category;
+import com.example.Project.ECommerce.Entity.CategoryMetadataField;
 import com.example.Project.ECommerce.Exceptions.UserNotFoundException;
 import com.example.Project.ECommerce.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,7 +38,7 @@ public class CategoryService {
             Category category1 = categoryRepository.findById(category_id).get();
             category1.setCategoryName(category.getCategoryName());
             categoryRepository.save(category1);
-            return "category Updated!";
+            return "category Name Updated!";
         } else
             throw new UserNotFoundException("Category with id: " + category_id + " not found!");
     }

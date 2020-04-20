@@ -18,14 +18,14 @@ public interface ProductVariationRepository extends PagingAndSortingRepository<P
     @Query(value = "select product_id from ProductVariation where id =:id",nativeQuery = true)
     long getProductId(@Param(value = "id") long id);
 
-    @Query(value = "select * from ProductVariation where product_id=:product_id",nativeQuery = true)
-    List<Object[]> getProductVariation(@Param("product_id") long product_id);
+    @Query(value = "select * from ProductVariation where id=:id",nativeQuery = true)
+    List<Object[]> getProductVariation(@Param("id") long id);
 
-    @Query(value = "select primaryImageName,price,quantity_available,metadata " +
+    @Query(value = "select primaryImageName,price,quantityAvailable,metadata " +
             "from ProductVariation pv " +
             "inner join Product p on pv.product_id=p.id " +
             "where p.id=:id",nativeQuery = true)
-    List<ProductVariation> getAllProductVariation(@Param(value ="id") long id, Pageable pageable);
+    List<Object[]> getAllProductVariation(@Param(value ="id") long id);
 
     @Transactional
     @Modifying

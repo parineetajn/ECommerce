@@ -19,7 +19,7 @@ import java.util.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Email
     @NotEmpty
@@ -52,7 +52,7 @@ public class User {
     private String modifiedBy;
 
     public boolean isEnable() {
-        return true;
+        return isEnable;
     }
 
     public void setEnable(boolean enable) {

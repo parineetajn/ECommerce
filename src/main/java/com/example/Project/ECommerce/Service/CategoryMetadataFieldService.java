@@ -13,7 +13,7 @@ public class CategoryMetadataFieldService {
     @Autowired
     CategoryMetadataFieldRepository categoryMetadataFieldRepository;
 
-    public List<CategoryMetadataField> viewAllCategoryMetadataFields(Pageable pageable){
-        return categoryMetadataFieldRepository.viewAllCategoryMetadataFields(pageable);
+    public List<Object[]> viewAllCategoryMetadataFields(){
+        return categoryMetadataFieldRepository.viewAllCategoryMetadataFields();
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public interface CategoryMetadataFieldRepository extends PagingAndSortingRepository<CategoryMetadataField,Long> {
 
     @Query(value = "select name from CategoryMetadataField",nativeQuery = true)
-    List<CategoryMetadataField> viewAllCategoryMetadataFields(Pageable pageable);
+    List<Object[]> viewAllCategoryMetadataFields();
 
    @Query(value="select name from CategoryMetadataField where id=:id ",nativeQuery = true)
     String getMetadataName(@Param(value = "id")long id);

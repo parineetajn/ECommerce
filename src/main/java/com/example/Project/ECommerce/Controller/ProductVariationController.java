@@ -31,16 +31,12 @@ public class ProductVariationController {
 
     @GetMapping("/seller/getProductVariation/{productVariation_id}")
     public List<Object[]> getProductVariation(@PathVariable(name = "productVariation_id")long productVariation_id){
-        return productVariationService.getProductVariations(productVariation_id);
+        return productVariationService.getProductVariation(productVariation_id);
     }
 
     @GetMapping("/seller/getAllProductVariations/{product_id}")
-    public List<ProductVariation> getAllProductVariation(@PathVariable(name = "product_id")long product_id,
-                                                         @RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
-                                                         @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
-                                                         @RequestParam(name = "sortBy", defaultValue = "id") String sortBy){
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Order.asc(sortBy)));
-       List<ProductVariation> productVariationList= productVariationService.getAllProductVariations(product_id,paging);
+    public List<Object[]> getAllProductVariation(@PathVariable(name = "product_id")long product_id){
+       List<Object[]> productVariationList= productVariationService.getAllProductVariations(product_id);
        return productVariationList;
     }
 
@@ -57,9 +53,10 @@ public class ProductVariationController {
     }
 
     @PutMapping("/seller/updateProductVariation/{productVariation_id}")
-    public void updateProductVariation(@PathVariable(name = "productVariation_id")long productVariation_id,
+    public String updateProductVariation(@PathVariable(name = "productVariation_id")long productVariation_id,
                                        @Valid @RequestBody ProductVariation productVariation) throws JsonProcessingException {
         productVariationService.updateProductVariation(productVariation,productVariation_id);
+        return "Product variation with id:"+productVariation_id+ " updated!";
 
     }
 

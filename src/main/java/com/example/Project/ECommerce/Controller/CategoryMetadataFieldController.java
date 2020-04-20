@@ -28,11 +28,8 @@ public class CategoryMetadataFieldController {
     }
 
     @GetMapping("/admin/getAllCategoryMetadataFields")
-    public List<CategoryMetadataField> viewAllCategoryMetadataFields(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
-                                                        @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
-                                                        @RequestParam(name = "sortBy", defaultValue = "id") String sortBy){
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Order.asc(sortBy)));
-        List<CategoryMetadataField> categoryMetadataFieldList= categoryMetadataFieldService.viewAllCategoryMetadataFields(paging);
+    public List<Object[]> viewAllCategoryMetadataFields(){
+        List<Object[]> categoryMetadataFieldList= categoryMetadataFieldService.viewAllCategoryMetadataFields();
         return categoryMetadataFieldList;
     }
 

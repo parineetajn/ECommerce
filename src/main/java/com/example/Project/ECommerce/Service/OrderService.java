@@ -1,7 +1,6 @@
 package com.example.Project.ECommerce.Service;
 
 import com.example.Project.ECommerce.Entity.*;
-import com.example.Project.ECommerce.Enums.Order_Status;
 import com.example.Project.ECommerce.Exceptions.InputException;
 import com.example.Project.ECommerce.Exceptions.UserNotAuthorizedException;
 import com.example.Project.ECommerce.Exceptions.UserNotFoundException;
@@ -37,6 +36,8 @@ public class OrderService {
 
     @Autowired
     ProductVariationService productVariationService;
+    @Autowired
+    OrderStatusService orderStatusService;
 
     public void placeOrder(long productVariation_id, int quantity,long address_id) {
         String username = getCurrentLoggedInUser.getCurrentUser();
@@ -74,7 +75,7 @@ public class OrderService {
         orderProduct.setProductVariation(productVariation);
 
         OrderStatus orderStatus = new OrderStatus();
-        orderStatus.setFromStatus(Order_Status.ORDER_PLACED);
+        orderStatus.setFromStatus(com.example.Project.ECommerce.Enums.orderStatus.ORDER_PLACED);
         orderStatus.setOrder_product(orderProduct);
 
         orderRepository.save(orders);
@@ -94,7 +95,7 @@ public class OrderService {
             Optional<OrderStatus> orderStatusOptional = orderStatusRepository.findById(orderStatus_id);
             OrderStatus orderStatus1 = orderStatusOptional.get();
             orderStatus1.setFromStatus(orderStatus.getFromStatus());
-            orderStatus1.setToStatus(orderStatus.getToStatus());
+            orderStatus1.setToStatus(orderStatusService.orderStatus.getToStatus());
             orderStatus1.setTransitionNotesComments(orderStatus.getTransitionNotesComments());
             orderStatusRepository.save(orderStatus1);
         } else {

@@ -79,7 +79,7 @@ public class ProductService {
         String text = "Product Brand: " + product.getBrand() + "\n" + "Product Description: " +
                 product.getDescription() + "\n" + "Product ID: " + product_id;
         mailSenderService.sendMailToAdmin(user, text);
-        return "Mail sent!";
+        return "Product Added! Mail sent to the admin!!";
     }
 
     public String updateProduct(ProductDto product,long product_id) {
@@ -138,6 +138,11 @@ public class ProductService {
 
         long category_id=productRepository.getCategoryId(product_id);
         return productRepository.getSimilarProducts(category_id);
+
+    }
+
+    public List<Object[]> getListOfProducts(String username){
+        return productRepository.findSellerProductList(username);
 
     }
 

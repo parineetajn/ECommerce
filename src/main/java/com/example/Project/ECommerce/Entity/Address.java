@@ -13,7 +13,6 @@ public class Address {
     private String state;
     private String country;
     private String addressLine;
-    @Size(min = 6,max = 6,message = "ZipCode should have 6 digits")
     private int zipCode;
     private String label;
 

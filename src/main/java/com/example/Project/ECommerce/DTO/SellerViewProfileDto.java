@@ -14,7 +14,6 @@ public class SellerViewProfileDto extends UserViewProfileDto{
     private String addressLine;
     private String city;
     private String state;
-    @Size(min = 6, max = 6, message = "Zipcode should be of length 6")
     private int zipCode;
     private String country;
     private String label;

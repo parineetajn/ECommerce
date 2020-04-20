@@ -91,7 +91,7 @@ public class SellerService {
         sellerViewProfileDto.setGST(seller.getGST());
         sellerViewProfileDto.setFirstName(seller.getFirstName());
         sellerViewProfileDto.setLastName(seller.getLastName());
-        sellerViewProfileDto.setActive(seller.isActive());
+        sellerViewProfileDto.setActive(seller.isEnable());
 
         Set<Address> addressSet=seller.getAddress();
         for(Address address:addressSet){

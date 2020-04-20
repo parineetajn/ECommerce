@@ -10,8 +10,8 @@ public class CustomerViewProfileDto extends UserViewProfileDto{
     public CustomerViewProfileDto() {
     }
 
-    public CustomerViewProfileDto(long id, String firstName, String lastName, Boolean isActive, @Pattern(regexp = "(^$|[0-9]{10})") String contact) {
-        super(id, firstName, lastName, isActive);
+    public CustomerViewProfileDto(long id, String firstName, String lastName, Boolean isEnable, @Pattern(regexp = "(^$|[0-9]{10})") String contact) {
+        super(id, firstName, lastName, isEnable);
         this.contact = contact;
     }
 

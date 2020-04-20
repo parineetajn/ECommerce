@@ -54,14 +54,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers("/customerRegister").anonymous()
                 .antMatchers("/sellerRegister").anonymous()
                 .antMatchers("/reSendActivationLink/{username}").anonymous()
-
+                .antMatchers("/forgetPassword").anonymous()
+                .antMatchers("/resetPassword").anonymous()
                 //common API's
-                .antMatchers("/forgetPassword").hasAnyRole("ADMIN","CUSTOMER","SELLER")
-                .antMatchers("/resetPassword").hasAnyRole("ADMIN","CUSTOMER","SELLER")
                 .antMatchers("/updateName").hasAnyRole("ADMIN","CUSTOMER")
-                //.antMatchers("/editImage").hasAnyRole("ADMIN","CUSTOMER")
                 .antMatchers("/updateAddress/{address_id}").hasAnyRole("CUSTOMER","SELLER")
-                .antMatchers("/viewProduct/{productId}").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/viewProduct/{productId}").hasAnyRole("ADMIN","CUSTOMER","SELLER")
                 .antMatchers("/doLogout").hasAnyRole("ADMIN","CUSTOMER","SELLER")
                 //admin API's
                 .antMatchers("/admin/*").hasAnyRole("ADMIN")

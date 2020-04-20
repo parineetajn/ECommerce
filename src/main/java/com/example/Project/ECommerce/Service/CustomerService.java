@@ -84,7 +84,7 @@ public class CustomerService {
         customerViewProfileDto.setContact(customer.getContact());
         customerViewProfileDto.setFirstName(customer.getFirstName());
         customerViewProfileDto.setLastName(customer.getLastName());
-        customerViewProfileDto.setActive(customer.isActive());
+        customerViewProfileDto.setActive(customer.isEnable());
         return customerViewProfileDto;
     }
 
@@ -115,7 +115,7 @@ public class CustomerService {
                 userRepository.save(user);
             }
         }
-        return "success";
+        return "Address added!";
     }
 
     public String reSendActivationLink(String username)

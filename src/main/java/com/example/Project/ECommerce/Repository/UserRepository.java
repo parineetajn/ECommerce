@@ -12,13 +12,13 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value = "select username,email,authority " +
+    @Query(value = "select username,authority " +
             "from User inner join Role on User.id = Role.id " +
             "where authority='ROLE_CUSTOMER'",nativeQuery = true)
     List<Object[]> findAllRegisteredCustomers();
 
 
-    @Query(value = "select username,email,authority " +
+    @Query(value = "select username,authority " +
             "from User inner join Role on User.id = Role.id " +
             "where authority='ROLE_SELLER'",nativeQuery = true)
     List<Object[]> findAllRegisteredSellers();

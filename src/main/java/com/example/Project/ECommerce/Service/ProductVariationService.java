@@ -85,16 +85,16 @@ public class ProductVariationService {
             throw new UserNotFoundException("Product Not Found");
         }
 
-    public List<Object[]> getProductVariations(long productVariation_id) {
+    public List<Object[]> getProductVariation(long productVariation_id) {
         String seller = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(seller);
-        long product_id = productVariationRepository.getProductId(productVariation_id);
+        Long product_id = productVariationRepository.getProductId(productVariation_id);
         Optional<Product> product = productRepository.findById(product_id);
         if (product.isPresent()) {
             Product product1 = product.get();
             if (product1.isActive()) {
                 if ((product1.getSeller().getUsername()).equals(seller1.getUsername())) {
-                    List<Object[]> objects = productVariationRepository.getProductVariation(product_id);
+                    List<Object[]> objects = productVariationRepository.getProductVariation(productVariation_id);
                     return objects;
                 } else
                     throw new UserNotAuthorizedException("You are not authorized to view the Product variations");
@@ -103,7 +103,7 @@ public class ProductVariationService {
         } else throw new UserNotFoundException("Product not Found!");
     }
 
-    public List<ProductVariation> getAllProductVariations(long product_id, Pageable pageable) {
+    public List<Object[]> getAllProductVariations(long product_id) {
         String seller = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(seller);
         Optional<Product> product = productRepository.findById(product_id);
@@ -112,7 +112,7 @@ public class ProductVariationService {
             Product product1 = product.get();
             if (product1.isActive()) {
                 if ((product1.getSeller().getUsername()).equals(seller1.getUsername())) {
-                    return productVariationRepository.getAllProductVariation(product_id,pageable);
+                    return productVariationRepository.getAllProductVariation(product_id);
                 } else
                     throw new UserNotAuthorizedException("You are not authorized to view the Product variations");
             } else

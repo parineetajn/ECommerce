@@ -7,16 +7,16 @@ public class UserViewProfileDto {
     private long id;
     private String firstName;
     private String lastName;
-    private Boolean isActive;
+    private Boolean isEnable;
 
     public UserViewProfileDto() {
     }
 
-    public UserViewProfileDto(long id, String firstName, String lastName, Boolean isActive) {
+    public UserViewProfileDto(long id, String firstName, String lastName, Boolean isEnable) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isActive = isActive;
+        this.isEnable = isEnable;
     }
 
 
@@ -45,11 +45,11 @@ public class UserViewProfileDto {
     }
 
     public Boolean getActive() {
-        return isActive;
+        return isEnable;
     }
 
     public void setActive(Boolean active) {
-        isActive = active;
+        isEnable = active;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserViewProfileDto {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", isActive=" + isActive +
+                ", isEnable=" + isEnable +
                 '}';
     }
 }

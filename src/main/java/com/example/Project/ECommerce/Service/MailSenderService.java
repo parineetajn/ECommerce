@@ -33,7 +33,7 @@ public class MailSenderService {
 
         mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
-        mail.setSubject("Changes Made by user");
+        mail.setSubject("Product Added");
         mail.setText(text);
 
         javaMailSender.send(mail);
@@ -48,7 +48,7 @@ public class MailSenderService {
         mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Token for current login:");
-        mail.setText(tokenService.getToken(user));
+        mail.setText("Hello,"+user.getFirstName()+ "this your token for current login:"+ tokenService.getToken(user));
 
         javaMailSender.send(mail);
 
@@ -63,7 +63,7 @@ public class MailSenderService {
         mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Token to Reset your Password:");
-        mail.setText(tokenService.getToken(user));
+        mail.setText("Hello,"+user.getFirstName()+"this is your token to reset your Password:"+tokenService.getToken(user));
 
         javaMailSender.send(mail);
 
@@ -77,7 +77,7 @@ public class MailSenderService {
         mail.setTo(user.getUsername());
         mail.setFrom("parittn2020@gmail.com");
         mail.setSubject("Password Updated..");
-        mail.setText("Your Password has been updated recently..");
+        mail.setText("Hello,"+user.getFirstName()+" Your Password has been updated recently..");
 
         javaMailSender.send(mail);
 

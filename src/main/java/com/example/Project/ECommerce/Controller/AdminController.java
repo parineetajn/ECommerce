@@ -44,7 +44,6 @@ public class AdminController {
         List<Object[]> registeredCustomers = userRepository.findAllRegisteredCustomers();
         for (Object[] objects : registeredCustomers) {
             System.out.println("UserName: " + objects[0]);
-            System.out.println("Email: " + objects[1]);
         }
         return registeredCustomers;
     }
@@ -54,7 +53,6 @@ public class AdminController {
         List<Object[]> registeredSellers = userRepository.findAllRegisteredSellers();
         for (Object[] objects : registeredSellers) {
             System.out.println("UserName: " + objects[0]);
-            System.out.println("Email: " + objects[1]);
         }
         return registeredSellers;
     }

@@ -1,6 +1,6 @@
 package com.example.Project.ECommerce.Entity;
 
-import com.example.Project.ECommerce.Enums.Order_Status;
+import com.example.Project.ECommerce.Enums.orderStatus;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -22,12 +22,12 @@ public class OrderStatus {
     @JoinColumn(name = "Order_Product_id")
     private OrderProduct order_product;
     @Enumerated(EnumType.STRING)
-    private Order_Status fromStatus;
+    private orderStatus fromStatus;
     @ElementCollection
     @CollectionTable(name="Product_ToStatus")
     @Column(name="To_Status")
     @Enumerated(EnumType.STRING)
-    private List<Order_Status> toStatus;
+    private List<orderStatus> toStatus;
     private String transitionNotesComments;
 
     @Column(name = "createdDate")
@@ -48,7 +48,7 @@ public class OrderStatus {
     public OrderStatus() {
     }
 
-    public OrderStatus(OrderProduct order_product, Order_Status fromStatus, List<Order_Status> toStatus, String transitionNotesComments) {
+    public OrderStatus(OrderProduct order_product, orderStatus fromStatus, List<orderStatus> toStatus, String transitionNotesComments) {
         this.order_product = order_product;
         this.fromStatus = fromStatus;
         this.toStatus = toStatus;
@@ -71,20 +71,20 @@ public class OrderStatus {
         this.order_product = order_product;
     }
 
-    public Order_Status getFromStatus() {
+    public orderStatus getFromStatus() {
         return fromStatus;
     }
 
-    public void setFromStatus(Order_Status fromStatus) {
+    public void setFromStatus(orderStatus fromStatus) {
         this.fromStatus = fromStatus;
     }
 
 
-    public List<Order_Status> getToStatus() {
+    public List<orderStatus> getToStatus() {
         return toStatus;
     }
 
-    public void setToStatus(List<Order_Status> toStatus) {
+    public void setToStatus(List<orderStatus> toStatus) {
         this.toStatus = toStatus;
     }
 

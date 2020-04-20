@@ -76,13 +76,14 @@ public class UserController {
     }
 
     @PostMapping("/forgetPassword")
-    public void forgetPassword() {
+    public String forgetPassword() {
         String username = getCurrentLoggedInUser.getCurrentUser();
         User user1 = userRepository.findByUsername(username);
         if (user1 != null) {
             mailSenderService.sendPasswordResetTokenMail(user1);
         } else
             throw new UserNotFoundException("User with username : " + username + " not found");
+        return "Link to reset your password sent to your email..";
     }
 
     @PutMapping("/resetPassword")

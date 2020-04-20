@@ -36,13 +36,6 @@ public class ProductController {
     @Autowired
     GetCurrentLoggedInUser getCurrentLoggedInUser;
 
-    @GetMapping("/seller/listOfProducts")
-    public List<Object[]> getListOfProducts() {
-        String username = getCurrentLoggedInUser.getCurrentUser();
-        Seller seller1 = sellerRepository.findByUsername(username);
-        return productRepository.findSellerProductList(username);
-    }
-
     @PostMapping("seller/addProduct/{category_id}")
     public String addProducts(@PathVariable(name = "category_id") long category_id, @RequestBody ProductDto product) {
         return productService.addNewProduct(product,category_id);
@@ -53,8 +46,8 @@ public class ProductController {
         return productService.updateProduct(product, product_id);
     }
 
-    @DeleteMapping("/seller/deleteProduct")
-    public String deleteProduct(@RequestParam(name = "productId") long product_id) {
+    @DeleteMapping("/seller/deleteProduct/{product_id}")
+    public String deleteProduct(@PathVariable(name = "product_id") long product_id) {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Seller seller1 = sellerRepository.findByUsername(username);
 
@@ -62,8 +55,9 @@ public class ProductController {
         if(productOptional.isPresent()) {
             Product product = productOptional.get();
             if (seller1.getUsername().equals(product.getSeller().getUsername())) {
-                productRepository.deleteProduct(product_id);
                 productVariationRepository.deleteProductVariation(product_id);
+                productRepository.deleteProduct(product_id);
+
             } else
                 throw new UserNotAuthorizedException( "You are not authorized seller to delete the product");
         }else
@@ -71,12 +65,19 @@ public class ProductController {
         return "Product with id: "+product_id+ " deleted..";
     }
 
+    @GetMapping("/seller/listOfProducts")
+    public List<Object[]> getListOfProducts() {
+        String username = getCurrentLoggedInUser.getCurrentUser();
+        Seller seller1 = sellerRepository.findByUsername(username);
+        return productService.getListOfProducts(username);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @GetMapping("/customer/listOfProducts/{categoryId}")
-    public List<Object[]> getListOfProducts(@PathVariable(name = "categoryId")long categoryId) {
-        return productRepository.findProductList(categoryId);
+    @GetMapping("/customer/listOfProducts/{category_id}")
+    public List<Object[]> getListOfProducts(@PathVariable(name = "category_id")long category_id) {
+        return productRepository.findProductList(category_id);
     }
 
     @GetMapping("/customer/ProductDetails/{product_id}")
@@ -140,9 +141,7 @@ public class ProductController {
 
 
     @GetMapping("/admin/listOfProducts")
-    public List<Object[]> getListOfAdminProducts(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
-                                                 @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
-                                                 @RequestParam(name = "sortBy", defaultValue = "id") String sortBy) {
+    public List<Object[]> getListOfAdminProducts() {
         List<Object[]> products = productRepository.findAdminProductList();
         return products;
     }
