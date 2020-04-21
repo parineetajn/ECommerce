@@ -1,24 +1,26 @@
 package com.example.Project.ECommerce.Repository;
 
+import com.example.Project.ECommerce.Entity.Customer;
+import com.example.Project.ECommerce.Entity.Role;
 import com.example.Project.ECommerce.Entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value = "select username,authority " +
+    @Query(value = "select User.id,username,authority " +
             "from User inner join Role on User.id = Role.id " +
             "where authority='ROLE_CUSTOMER'",nativeQuery = true)
     List<Object[]> findAllRegisteredCustomers();
 
-
-    @Query(value = "select username,authority " +
+    @Query(value = "select * " +
             "from User inner join Role on User.id = Role.id " +
             "where authority='ROLE_SELLER'",nativeQuery = true)
     List<Object[]> findAllRegisteredSellers();

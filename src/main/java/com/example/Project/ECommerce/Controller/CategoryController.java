@@ -31,7 +31,7 @@ public class CategoryController {
         return categoryService.getParentCategory();
     }
 
-    @GetMapping("/admin/getSubCategories/{Category_parent_id}")
+    @GetMapping("/getSubCategories/{Category_parent_id}")
     public List<Object[]> getSubcategories(@PathVariable(name = "Category_parent_id") long category_parent_id) {
        return  categoryService.getSubCategory(category_parent_id);
     }

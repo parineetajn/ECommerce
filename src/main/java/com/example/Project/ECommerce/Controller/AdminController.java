@@ -6,13 +6,15 @@ import com.example.Project.ECommerce.Service.TokenService;
 import com.example.Project.ECommerce.Service.UserService;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import com.example.Project.ECommerce.Repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class AdminController {
@@ -40,20 +42,22 @@ public class AdminController {
     }
 
     @GetMapping("/admin/getAllRegisteredCustomers")
-    public List<Object[]> getRegisteredCustomer() {
-        List<Object[]> registeredCustomers = userRepository.findAllRegisteredCustomers();
-        for (Object[] objects : registeredCustomers) {
+    public List<Map<String,Object>> getRegisteredCustomer() {
+        List<Map<String,Object>> registeredCustomers = userService.findAllRegisteredCustomers();
+       /* for (Object[] objects : registeredCustomers) {
             System.out.println("UserName: " + objects[0]);
-        }
+        }*/
+      /*  for (Object[] ob : registeredCustomers) {
+            String key = (String) ob[0];
+            String value = (String) ob[1];
+        }*/
+
         return registeredCustomers;
     }
 
     @GetMapping("/admin/getAllRegisteredSellers")
-    public List<Object[]> getRegisteredSeller() {
-        List<Object[]> registeredSellers = userRepository.findAllRegisteredSellers();
-        for (Object[] objects : registeredSellers) {
-            System.out.println("UserName: " + objects[0]);
-        }
+    public List<Map<String,Object>> getRegisteredSeller() {
+        List<Map<String,Object>> registeredSellers = userService.findAllRegisteredSellers();
         return registeredSellers;
     }
 

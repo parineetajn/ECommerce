@@ -46,7 +46,7 @@ public class UserService {
         System.out.println(user);
 
         if (username != null) {
-            System.out.println("---------->"+user.isEnable());
+            System.out.println("---------->" + user.isEnable());
             return new AppUser(user.getUsername(), user.getPassword(), user.getConfirmPassword(), grantAuthorityList, user.isEnable());
         } else {
             throw new UserNotFoundException(username + "not found");
@@ -109,10 +109,36 @@ public class UserService {
             customer.addAddress(address1);
             customerRepository.save(customer);
 
-        }else {
+        } else {
             return "Address with id: " + address_id + " does not exist!";
         }
         return "Address updated!";
     }
 
+    public List<Map<String, Object>> findAllRegisteredCustomers() {
+        List<Object[]> list = userRepository.findAllRegisteredCustomers();
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        for (Object[] o : list) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("Id:", o[0]);
+            map.put("Username:", o[1]);
+            map.put("Role:", o[2]);
+            mapList.add(map);
+        }
+        return mapList;
     }
+
+    public List<Map<String,Object>> findAllRegisteredSellers() {
+        List<Object[]> list = userRepository.findAllRegisteredSellers();
+
+        List<Map<String,Object>> mapList=new ArrayList<>();
+        for(Object[] o:list){
+            Map<String,Object> map=new HashMap<>();
+            map.put("Id:",o[0]);
+            map.put("Username:",o[1]);
+            map.put("Role:",o[2]);
+            mapList.add(map);
+        }
+        return mapList;
+    }
+}
