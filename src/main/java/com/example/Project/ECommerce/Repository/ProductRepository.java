@@ -34,7 +34,7 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
             "where p.isActive=true and c.id=:id",nativeQuery = true)
     List<Object[]> findProductList(@Param(value = "id")long id);
 
-    @Query(value = "select pv.id, p.name,p.brand,p.isReturnable,c.categoryName,pv.primaryImageName " +
+    @Query(value = "select pv.id,pv.product_id, p.name,p.brand,p.isReturnable,c.categoryName,pv.primaryImageName " +
             "from Product p inner join Category c on p.category_id=c.id" +
             " inner join ProductVariation pv on p.id=pv.product_id" +
             " inner join User u on p.seller_user_id=u.id " +
