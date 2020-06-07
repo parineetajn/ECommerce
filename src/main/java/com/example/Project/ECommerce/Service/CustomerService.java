@@ -1,22 +1,26 @@
 package com.example.Project.ECommerce.Service;
 
+import com.example.Project.ECommerce.DTO.AddressDto;
 import com.example.Project.ECommerce.DTO.CustomerRegisterDto;
 import com.example.Project.ECommerce.DTO.CustomerViewProfileDto;
 import com.example.Project.ECommerce.Entity.*;
 import com.example.Project.ECommerce.Exceptions.InputException;
 import com.example.Project.ECommerce.Exceptions.PasswordAndConfirmPasswordMismatchException;
 import com.example.Project.ECommerce.Exceptions.UserNotFoundException;
-import com.example.Project.ECommerce.Repository.AddressRepository;
 import com.example.Project.ECommerce.Repository.CustomerRepository;
 import com.example.Project.ECommerce.Repository.TokenRepository;
 import com.example.Project.ECommerce.Repository.UserRepository;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomerService {
@@ -76,7 +80,7 @@ public class CustomerService {
         return "Profile updated!";
     }
 
-    public CustomerViewProfileDto viewProfile() {
+    public ResponseEntity viewProfile() {
         String username = getCurrentLoggedInUser.getCurrentUser();
         Customer customer = customerRepository.findByUsername(username);
         CustomerViewProfileDto customerViewProfileDto = new CustomerViewProfileDto();
@@ -85,8 +89,20 @@ public class CustomerService {
         customerViewProfileDto.setFirstName(customer.getFirstName());
         customerViewProfileDto.setLastName(customer.getLastName());
         customerViewProfileDto.setActive(customer.isEnable());
-        return customerViewProfileDto;
-    }
+        return ResponseEntity.ok(customerViewProfileDto);    }
+
+        public List<AddressDto> viewAddress(){
+            String username = getCurrentLoggedInUser.getCurrentUser();
+            Customer customer = customerRepository.findByUsername(username);
+
+            Set<Address> addressSet= customer.getAddress();
+            List<AddressDto> addressDtoList = new ArrayList<>();
+            for (Address address: addressSet){
+                AddressDto addressDTO= modelMapper.map(address, AddressDto.class);
+                addressDTO.setLabel("Home");
+                addressDtoList.add(addressDTO);}
+            return addressDtoList;
+        }
 
     public String addNewAddress(Address address) {
         String username = getCurrentLoggedInUser.getCurrentUser();

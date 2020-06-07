@@ -1,5 +1,6 @@
 package com.example.Project.ECommerce.Controller;
 
+import com.example.Project.ECommerce.DTO.AddressDto;
 import com.example.Project.ECommerce.DTO.CustomerRegisterDto;
 import com.example.Project.ECommerce.DTO.CustomerViewProfileDto;
 import com.example.Project.ECommerce.Repository.AddressRepository;
@@ -9,6 +10,7 @@ import com.example.Project.ECommerce.Repository.CustomerRepository;
 import com.example.Project.ECommerce.Utility.GetCurrentLoggedInUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +43,7 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/myProfile")
-    public CustomerViewProfileDto viewProfile(){
+    public ResponseEntity<?> viewProfile(){
         return customerService.viewProfile();
     }
 
@@ -56,10 +58,8 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/viewAddress")
-    public List<Object[]> viewAddress(){
-        String username= getCurrentLoggedInUser.getCurrentUser();
-        Customer customer= customerRepository.findByUsername(username);
-        return addressRepository.viewAddress(username);
+    public List<AddressDto> viewAddress(){
+        return customerService.viewAddress();
     }
 
     @DeleteMapping("/customer/deleteAddress/{address_id}")

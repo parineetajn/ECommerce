@@ -8,14 +8,14 @@ import java.io.Serializable;
 @Entity
 public class CategoryMetadataFieldValue implements Serializable {
     @EmbeddedId
-    private CategoryMetadataFieldValuesId id = new CategoryMetadataFieldValuesId();
+    private CategoryMetadataFieldValuesId id ;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     @MapsId("category_id")
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "category_metadata_field_id")
     @MapsId("category_metadata_field_id")
     private CategoryMetadataField categoryMetadataField;

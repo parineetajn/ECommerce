@@ -52,6 +52,7 @@ public class ProductService {
         product1.setBrand(product.getBrand());
         product1.setActive(false);
         product1.setCancellable(product.isCancellable());
+        product1.setReturnable(product.isReturnable());
         product1.setDescription(product.getDescription());
         product1.setName(product.getName());
         product1.setSeller(seller);

@@ -27,7 +27,7 @@ public class CategoryMetadataFieldController {
         return "CategoryMetadataField is successfully created";
     }
 
-    @GetMapping("/admin/getAllCategoryMetadataFields")
+    @GetMapping("/admin/AllCategoryMetadataFields")
     public List<Object[]> viewAllCategoryMetadataFields(){
         List<Object[]> categoryMetadataFieldList= categoryMetadataFieldService.viewAllCategoryMetadataFields();
         return categoryMetadataFieldList;

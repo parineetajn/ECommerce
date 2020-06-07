@@ -34,18 +34,4 @@ public class CategoryMetadataFieldValuesId implements Serializable {
         this.category_metadata_field_id = category_metadata_field_id;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CategoryMetadataFieldValuesId)) return false;
-        CategoryMetadataFieldValuesId that = (CategoryMetadataFieldValuesId) o;
-        return category_id == that.category_id &&
-                category_metadata_field_id == that.category_metadata_field_id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(category_id, category_metadata_field_id);
-    }
 }

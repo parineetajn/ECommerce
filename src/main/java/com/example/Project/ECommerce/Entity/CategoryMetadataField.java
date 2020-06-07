@@ -1,6 +1,7 @@
 package com.example.Project.ECommerce.Entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class CategoryMetadataField {
@@ -11,8 +12,23 @@ public class CategoryMetadataField {
     @Column(unique = true)
     private String name;
 
+    @OneToMany(mappedBy ="categoryMetadataField",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<CategoryMetadataFieldValue> categoryMetadataFieldValuesSet;
+
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<CategoryMetadataFieldValue> getCategoryMetadataFieldValuesSet() {
+        return categoryMetadataFieldValuesSet;
+    }
+
+    public void setCategoryMetadataFieldValuesSet(Set<CategoryMetadataFieldValue> categoryMetadataFieldValuesSet) {
+        this.categoryMetadataFieldValuesSet = categoryMetadataFieldValuesSet;
     }
 
     public void setId(Long id) {

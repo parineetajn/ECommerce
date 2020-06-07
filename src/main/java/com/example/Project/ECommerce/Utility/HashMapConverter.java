@@ -2,39 +2,40 @@ package com.example.Project.ECommerce.Utility;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.AttributeConverter;
 import java.io.IOException;
 import java.util.Map;
 
-public class HashMapConverter implements AttributeConverter<Map<String, Object>, String> {
+public class HashMapConverter implements AttributeConverter<Map<String,Object>,String> {
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper=new ObjectMapper();
+    private static final Logger LOGGER= LoggerFactory.getLogger(HashMapConverter.class);
 
     @Override
-    public String convertToDatabaseColumn(Map<String, Object> productVariationInfo) {
-
-        String productVariationInfoJson = null;
-        try {
-            productVariationInfoJson = objectMapper.writeValueAsString(productVariationInfo);
-        } catch (final JsonProcessingException e) {
-            System.out.println(e);
+    public String convertToDatabaseColumn(Map<String, Object> customerInfo) {
+        String customerInfoJson=null;
+        try{
+            customerInfoJson=objectMapper.writeValueAsString(customerInfo);
         }
 
-        return productVariationInfoJson;
+        catch (final JsonProcessingException e){
+            LOGGER.debug("Json writing error{}",e);
+        }
+        return customerInfoJson;
     }
 
     @Override
-    public Map<String, Object> convertToEntityAttribute(String productVariationInfoJSON) {
-
-        Map<String, Object> productVariationInfo = null;
+    public Map<String, Object> convertToEntityAttribute(String customerInfoJson) {
+        Map<String,Object>customerInfo=null;
         try {
-            productVariationInfo = objectMapper.readValue(productVariationInfoJSON, Map.class);
-        } catch (final IOException e) {
-            System.out.println(e);
+            customerInfo=objectMapper.readValue(customerInfoJson,Map.class);
         }
-
-        return productVariationInfo;
+        catch (final IOException ex){
+            LOGGER.debug("Json reading error{} ",ex);
+        }
+        return customerInfo;
     }
-
 }

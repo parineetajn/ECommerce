@@ -42,28 +42,21 @@ public class AdminController {
     }
 
     @GetMapping("/admin/getAllRegisteredCustomers")
-    public List<Map<String,Object>> getRegisteredCustomer() {
-        List<Map<String,Object>> registeredCustomers = userService.findAllRegisteredCustomers();
-       /* for (Object[] objects : registeredCustomers) {
-            System.out.println("UserName: " + objects[0]);
-        }*/
-      /*  for (Object[] ob : registeredCustomers) {
-            String key = (String) ob[0];
-            String value = (String) ob[1];
-        }*/
-
+    public List<Object[]> getRegisteredCustomer() {
+        List<Object[]> registeredCustomers = userService.findAllRegisteredCustomers();
         return registeredCustomers;
     }
 
     @GetMapping("/admin/getAllRegisteredSellers")
-    public List<Map<String,Object>> getRegisteredSeller() {
-        List<Map<String,Object>> registeredSellers = userService.findAllRegisteredSellers();
+    public List<Object[]> getRegisteredSeller() {
+        List<Object[]> registeredSellers = userService.findAllRegisteredSellers();
         return registeredSellers;
     }
 
-    @PutMapping("/admin/changeRole")
-    public void changeRole(@RequestParam(name = "role") Role role) {
-        String username = getCurrentLoggedInUser.getCurrentUser();
+    @PutMapping("/admin/changeRole/{id}")
+    public void changeRole(@PathVariable(name = "id") Long id,
+                           @RequestParam(name = "role") Role role) {
+        String username = userRepository.findUsernameById(id);
         User user1 = userRepository.findByUsername(username);
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);

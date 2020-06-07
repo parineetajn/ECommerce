@@ -1,5 +1,6 @@
 package com.example.Project.ECommerce.Repository;
 
+import com.example.Project.ECommerce.Entity.Product;
 import com.example.Project.ECommerce.Entity.ProductVariation;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,10 +19,11 @@ public interface ProductVariationRepository extends PagingAndSortingRepository<P
     @Query(value = "select product_id from ProductVariation where id =:id",nativeQuery = true)
     long getProductId(@Param(value = "id") long id);
 
+
     @Query(value = "select * from ProductVariation where id=:id",nativeQuery = true)
     List<Object[]> getProductVariation(@Param("id") long id);
 
-    @Query(value = "select primaryImageName,price,quantityAvailable,metadata " +
+    @Query(value = "select pv.id,primaryImageName,price,quantityAvailable,metadata " +
             "from ProductVariation pv " +
             "inner join Product p on pv.product_id=p.id " +
             "where p.id=:id",nativeQuery = true)

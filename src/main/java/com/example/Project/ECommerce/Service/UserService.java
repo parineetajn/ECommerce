@@ -115,30 +115,13 @@ public class UserService {
         return "Address updated!";
     }
 
-    public List<Map<String, Object>> findAllRegisteredCustomers() {
+    public List<Object[]> findAllRegisteredCustomers() {
         List<Object[]> list = userRepository.findAllRegisteredCustomers();
-        List<Map<String, Object>> mapList = new ArrayList<>();
-        for (Object[] o : list) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("Id:", o[0]);
-            map.put("Username:", o[1]);
-            map.put("Role:", o[2]);
-            mapList.add(map);
-        }
-        return mapList;
+        return list;
     }
 
-    public List<Map<String,Object>> findAllRegisteredSellers() {
+    public List<Object[]> findAllRegisteredSellers() {
         List<Object[]> list = userRepository.findAllRegisteredSellers();
-
-        List<Map<String,Object>> mapList=new ArrayList<>();
-        for(Object[] o:list){
-            Map<String,Object> map=new HashMap<>();
-            map.put("Id:",o[0]);
-            map.put("Username:",o[1]);
-            map.put("Role:",o[2]);
-            mapList.add(map);
-        }
-        return mapList;
+        return list;
     }
 }

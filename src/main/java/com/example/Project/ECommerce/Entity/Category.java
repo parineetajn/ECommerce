@@ -8,7 +8,7 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
     @NotEmpty
     @Column(unique = true)
     private String categoryName;
@@ -23,7 +23,7 @@ public class Category {
     @OneToMany(mappedBy = "productCategory",cascade = CascadeType.ALL)
     private Set<Product> products;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = CategoryMetadataFieldValue.class,mappedBy = "category", cascade = CascadeType.ALL)
     private Set<CategoryMetadataFieldValue> categoryMetadataFieldValueSet;
 
     public Category() {
@@ -33,11 +33,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

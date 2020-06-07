@@ -1,15 +1,14 @@
 package com.example.Project.ECommerce.Controller;
 
+import com.example.Project.ECommerce.DTO.FilteringDto;
+import com.example.Project.ECommerce.DTO.ViewCategoryDto;
 import com.example.Project.ECommerce.Entity.Category;
-import com.example.Project.ECommerce.Entity.CategoryMetadataField;
-import com.example.Project.ECommerce.Exceptions.UserNotFoundException;
 import com.example.Project.ECommerce.Repository.CategoryRepository;
 import com.example.Project.ECommerce.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,8 +24,7 @@ public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
 
-
-     @GetMapping("/admin/getParentCategories")
+     @GetMapping("/getParentCategories")
     public List<Object[]> getCategories() {
         return categoryService.getParentCategory();
     }
@@ -36,25 +34,26 @@ public class CategoryController {
        return  categoryService.getSubCategory(category_parent_id);
     }
 
-    @GetMapping("/admin/getAllLeafSubCategories")
-    public List<Category> getAllLeafSubcategories(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
-                                                  @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
-                                                  @RequestParam(name = "sortBy", defaultValue = "id") String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Order.asc(sortBy)));
+    @GetMapping("/admin/category/{id}")
+    public List<ViewCategoryDto> viewSingleCategory(@PathVariable("id") Long id){
+        return categoryService.viewSingleCategory(id);
+    }
 
-        if (categoryRepository.findAll(paging).isEmpty()) {
-            throw new UserNotFoundException("This list is empty because no metadata is present");
-        } else {
-            Page<Category> pageResult = categoryRepository.findAll(paging);
-            if (pageResult.hasContent()) {
-                return pageResult.getContent();
-            } else {
-                throw new UserNotFoundException("This page has no content");
-            }
-        }
-     }
+    @GetMapping("/admin/allCategories")
+    public ResponseEntity<List<ViewCategoryDto>> viewAllCategories(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
+                                                                   @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
+                                                                   @RequestParam(name = "sortBy", defaultValue = "id") String sortBy){
+        List<ViewCategoryDto> list = categoryService.viewAllCategoriesForAdmin(pageNo, pageSize, sortBy);
+        return new ResponseEntity<List<ViewCategoryDto>>(list, new HttpHeaders(), HttpStatus.OK);
+    }
 
-      @PostMapping("/admin/addCategory")
+    @GetMapping("/seller/allCategories")
+    public List<ViewCategoryDto> viewAllCategory(){
+        return categoryService.viewAllCategoriesForSeller();
+    }
+
+
+    @PostMapping("/admin/addCategory")
         public String addCategory(@RequestParam(value = "parent_id", required = false) Long parent_id,
                               @RequestParam(value = "CategoryName") String CategoryName) {
         Category category = new Category();
@@ -75,6 +74,21 @@ public class CategoryController {
     public String updateCategory(@PathVariable(name = "category_id")long category_id,
                                  @Valid @RequestBody Category category){
          return categoryService.updateCategory(category_id,category);
+    }
+
+    @GetMapping("/customer/filtering/{category_id}")
+    public FilteringDto filtering(@PathVariable(value = "category_id") Long category_id) {
+        return categoryService.getFilteringDetails(category_id);
+    }
+    @GetMapping("/customer/viewAllCategoriesExceptLeaf")
+    public ResponseEntity<List<ViewCategoryDto>> viewAllCategoriesExceptLeaf(@RequestParam(name = "pageNo", required = true, defaultValue = "0") Integer pageNo,
+                                                                               @RequestParam(name = "pageSize", required = true, defaultValue = "10") Integer pageSize,
+                                                                               @RequestParam(name = "sortBy", defaultValue = "id") String sortBy)
+    {
+        List<ViewCategoryDto> list = categoryService.viewAllCategoriesExceptLeaf(pageNo, pageSize, sortBy);
+        return new ResponseEntity<List<ViewCategoryDto>>(list, new HttpHeaders(), HttpStatus.OK);
+
+
     }
 
 }

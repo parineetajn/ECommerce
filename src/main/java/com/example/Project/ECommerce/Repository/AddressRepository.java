@@ -21,6 +21,6 @@ public interface AddressRepository extends CrudRepository<Address,Long> {
             "where Address.id=:address_id",nativeQuery = true)
     void deleteAddress(@Param(value = "address_id") long address_id);
 
-    @Query(value = "select addressLine,state,city,country,label,zipCode from Address inner join User on Address.User_id=User.id where username=:username",nativeQuery = true)
+    @Query(value = "select Address.id,addressLine,state,city,country,label,zipCode from Address inner join User on Address.User_id=User.id where username=:username",nativeQuery = true)
     List<Object[]> viewAddress(@Param(value = "username")String username);
 }

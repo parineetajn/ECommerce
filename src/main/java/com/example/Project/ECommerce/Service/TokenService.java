@@ -30,7 +30,7 @@ public class TokenService {
 
     }
 
-    public void verifyToken(String token){
+    public User verifyToken(String token){
         Token token1= null;
         for (Token token2: tokenRepository.findAll()){
             if(token2.getRandomToken().equals(token)){
@@ -39,5 +39,6 @@ public class TokenService {
         }
         User user = userRepository.findByUsername(token1.getTokenName());
         userRepository.save(user);
+        return user;
     }
 }

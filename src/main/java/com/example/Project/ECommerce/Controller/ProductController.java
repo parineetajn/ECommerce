@@ -36,7 +36,7 @@ public class ProductController {
     @Autowired
     GetCurrentLoggedInUser getCurrentLoggedInUser;
 
-    @PostMapping("seller/addProduct/{category_id}")
+    @PostMapping("/seller/addProduct/{category_id}")
     public String addProducts(@PathVariable(name = "category_id") long category_id, @RequestBody ProductDto product) {
         return productService.addNewProduct(product,category_id);
     }

@@ -18,8 +18,8 @@ public class CategoryMetadataFieldValuesController {
 
     @PostMapping("/admin/addMetadataValues/{category_id}/{metadata_id}")
     public String addCategoryMetadataFieldValues(@RequestBody CategoryMetadataFieldValue categoryMetadataFieldValue,
-                                  @PathVariable(value = "category_id") long category_id,
-                                  @PathVariable(value = "metadata_id") long metadata_id) {
+                                  @PathVariable(value = "category_id") Long category_id,
+                                  @PathVariable(value = "metadata_id") Long metadata_id) {
         categoryMetadataFieldValuesService.addCategoryMetadataFieldValues(categoryMetadataFieldValue, category_id, metadata_id);
         return "Metadata value added for metadata field with id: "+metadata_id;
 
@@ -35,12 +35,12 @@ public class CategoryMetadataFieldValuesController {
 
     }
 
-    @GetMapping("/admin/viewMetadataValues/{category_id}/{metadata_id}")
+    @GetMapping("/admin/metadataValue/{category_id}/{metadata_id}")
     public List<Object[]> viewAMetadataValue(@PathVariable(value = "category_id") long category_id,
                                              @PathVariable(value = "metadata_id") long metadata_id) {
         return categoryMetadataFieldValuesService.viewCategoryMetadataFieldValue(category_id, metadata_id);
     }
-    @GetMapping("/admin/viewAllMetadataValues")
+    @GetMapping("/admin/allMetadataValues")
     public List<Object[]> viewAllMetadataValues() {
         return categoryMetadataFieldValuesRepository.getAllCategoryMetadataFieldValues();
     }
